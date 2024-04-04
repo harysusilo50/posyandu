@@ -42,7 +42,6 @@ class JadwalController extends Controller
             'jenis_pelayanan' => 'required|string',
             'lokasi' => 'required|string',
             'tanggal' => 'required',
-            'deskripsi' => 'string',
         ]);
 
         try {
@@ -81,7 +80,6 @@ class JadwalController extends Controller
             'jenis_pelayanan' => 'required|string',
             'lokasi' => 'required|string',
             'tanggal' => 'required',
-            'deskripsi' => 'string',
         ]);
 
         try {

@@ -39,6 +39,7 @@
                             <th class="text-center">No.</th>
                             <th class="text-center">Tanggal Pemeriksaan</th>
                             <th class="text-center">ID Bayi</th>
+                            <th class="text-center">Nama</th>
                             <th class="text-center">Usia</th>
                             <th class="text-center">Berat Badan</th>
                             <th class="text-center">Tinggi Badan</th>
@@ -170,6 +171,9 @@
                                     </div>
                                 </td>
                                 <td>
+                                    {{ $item->user->nama_anak }}
+                                </td>
+                                <td>
                                     {{ $item->user->usia }} thn
                                 </td>
                                 <td>
@@ -177,6 +181,9 @@
                                 </td>
                                 <td>
                                     {{ $item->tinggi_badan }} cm
+                                </td>
+                                <td>
+                                    {{ $item->lingkar_kepala }} cm
                                 </td>
                                 <td>
                                     {{ $item->jenis_imunisasi }}
