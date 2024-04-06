@@ -9,6 +9,7 @@ use App\Models\Pelayanan;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -17,17 +18,23 @@ class PelayananController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $auth = Auth::user()->role ?? 'user';
         if ($search) {
             $data = Pelayanan::with('user')->where('nama', 'LIKE', "%$search%")
                 ->orWhere('jenis_imunisasi', 'LIKE', "%$search%")
                 ->orWhere('jenis_vitamin', 'LIKE', "%$search%")
+                ->when($auth == 'user', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })
                 ->latest()
                 ->paginate(15)
                 ->withQueryString();
             return view('pages.pelayanan.index', compact('data', 'search'));
         }
 
-        $data = Pelayanan::with('user')->latest()->paginate(15)->withQueryString();
+        $data = Pelayanan::with('user')->when($auth == 'user', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->latest()->paginate(15)->withQueryString();
 
         return view('pages.pelayanan.index', compact('data'));
     }

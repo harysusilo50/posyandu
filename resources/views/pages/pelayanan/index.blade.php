@@ -8,10 +8,12 @@
         <div class="card-body">
             <div class="d-lg-flex justify-content-lg-between mb-3 d-block">
                 <div class="my-2">
-                    <a href="{{ route('pelayanan.create') }}" class="btn btn-primary btn-sm">
-                        New
-                        <i class="fas fa-plus-circle"></i>
-                    </a>
+                    @if (Auth::user()->role == 'admin')
+                        <a href="{{ route('pelayanan.create') }}" class="btn btn-primary btn-sm">
+                            New
+                            <i class="fas fa-plus-circle"></i>
+                        </a>
+                    @endif
                 </div>
                 <form action="" method="GET">
                     <div class="input-group my-2">
@@ -43,9 +45,12 @@
                             <th class="text-center">Usia</th>
                             <th class="text-center">Berat Badan</th>
                             <th class="text-center">Tinggi Badan</th>
+                            <th class="text-center">Lingkar Kepala</th>
                             <th class="text-center">Imunisasi</th>
                             <th class="text-center">Vitamin</th>
-                            <th class="text-center">Aksi</th>
+                            @if (Auth::user()->role == 'admin')
+                                <th class="text-center">Aksi</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -191,47 +196,49 @@
                                 <td>
                                     {{ $item->jenis_vitamin }}
                                 </td>
-                                <td class="text-center" style="width: 10%">
-                                    <div class="d-flex row justify-content-center">
-                                        <a class="btn btn-success btn-sm col-8 m-1"
-                                            href="{{ route('pelayanan.edit', $item->id) }}">
-                                            Edit <i class="bi bi-pencil ms-2"></i>
-                                        </a>
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-danger btn-sm col-8 m-1"
-                                            data-toggle="modal" data-target="#model_delete{{ $item->id }}">
-                                            Delete <i class="bi bi-trash3-fill ms-2"></i>
-                                        </button>
-                                    </div>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="model_delete{{ $item->id }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <form action="{{ route('pelayanan.destroy', $item->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <div class="modal-header border-0">
-                                                        <h5 class="modal-title">Peringatan!</h5>
-                                                        <button type="button" class="btn btn-close bg-light"
-                                                            data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body border-0">
-                                                        Apakah anda yakin ingin menghapus data ini?
-                                                    </div>
-                                                    <div class="modal-footer d-flex justify-content-center border-0">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Close</button>
-                                                        <button type="submit"class="btn btn-danger">Hapus</button>
-                                                    </div>
-                                                </form>
+                                @if (Auth::user()->role == 'admin')
+                                    <td class="text-center" style="width: 10%">
+                                        <div class="d-flex row justify-content-center">
+                                            <a class="btn btn-success btn-sm col-8 m-1"
+                                                href="{{ route('pelayanan.edit', $item->id) }}">
+                                                Edit <i class="bi bi-pencil ms-2"></i>
+                                            </a>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-danger btn-sm col-8 m-1"
+                                                data-toggle="modal" data-target="#model_delete{{ $item->id }}">
+                                                Delete <i class="bi bi-trash3-fill ms-2"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="model_delete{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('pelayanan.destroy', $item->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <div class="modal-header border-0">
+                                                            <h5 class="modal-title">Peringatan!</h5>
+                                                            <button type="button" class="btn btn-close bg-light"
+                                                                data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"></span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body border-0">
+                                                            Apakah anda yakin ingin menghapus data ini?
+                                                        </div>
+                                                        <div class="modal-footer d-flex justify-content-center border-0">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit"class="btn btn-danger">Hapus</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

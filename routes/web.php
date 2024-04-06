@@ -22,33 +22,43 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::get('/home', function () {
-    return view('pages.home');
-});
-Route::get('/', function () {
-    return view('pages.home');
-})->name('home');
-Route::get('admin/login', [LoginController::class, 'showLoginFormAdmin'])->name('admin.login');
-Route::get('admin/keuangan', [KeuanganController::class, 'index'])->name('admin.keuangan.index');
-// User
-Route::resource('admin/user', UserController::class);
-Route::get('admin/report/user', [UserController::class, 'export_pdf'])->name('user.report');
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('login-admin', [LoginController::class, 'showLoginFormAdmin'])->name('admin.login');
+Route::group(
+    ['middleware' => 'auth'],
+    function () {
+        Route::get('/home', function () {
+            return view('pages.home');
+        });
+        Route::get('/', function () {
+            return view('pages.home');
+        })->name('home');
 
-// Anggota
-Route::resource('admin/anggota', AnggotaController::class);
-Route::get('admin/report/anggota', [AnggotaController::class, 'export_pdf'])->name('anggota.report');
+        // User
+        Route::resource('user', UserController::class);
+        Route::get('report/user', [UserController::class, 'export_pdf'])->name('user.report');
 
-// Peralatan
-Route::resource('admin/peralatan', PeralatanController::class);
-Route::get('admin/report/peralatan', [PeralatanController::class, 'export_pdf'])->name('peralatan.report');
+        // Anggota
+        Route::resource('anggota', AnggotaController::class);
+        Route::get('report/anggota', [AnggotaController::class, 'export_pdf'])->name('anggota.report');
 
-// Jadwal
-Route::resource('admin/jadwal', JadwalController::class);
-Route::get('admin/report/jadwal', [JadwalController::class, 'export_pdf'])->name('jadwal.report');
-Route::post('admin/add/jenis-pelayanan', [JadwalController::class, 'add_jenis_pelayanan'])->name('jadwal.add_jenis_pelayanan');
+        // Peralatan
+        Route::resource('peralatan', PeralatanController::class);
+        Route::get('report/peralatan', [PeralatanController::class, 'export_pdf'])->name('peralatan.report');
 
-// Pelayanan
-Route::resource('admin/pelayanan', PelayananController::class);
-Route::get('admin/report/pelayanan', [PelayananController::class, 'export_pdf'])->name('pelayanan.report');
-Route::post('admin/add/jenis-imunisasi', [PelayananController::class, 'add_jenis_imunisasi'])->name('pelayanan.add_jenis_imunisasi');
-Route::post('admin/add/jenis-vitamin', [PelayananController::class, 'add_jenis_vitamin'])->name('pelayanan.add_jenis_vitamin');
+        // Jadwal
+        Route::resource('jadwal', JadwalController::class);
+        Route::get('report/jadwal', [JadwalController::class, 'export_pdf'])->name('jadwal.report');
+        Route::post('add/jenis-pelayanan', [JadwalController::class, 'add_jenis_pelayanan'])->name('jadwal.add_jenis_pelayanan');
+
+        // Pelayanan
+        Route::resource('pelayanan', PelayananController::class);
+        Route::get('report/pelayanan', [PelayananController::class, 'export_pdf'])->name('pelayanan.report');
+        Route::post('add/jenis-imunisasi', [PelayananController::class, 'add_jenis_imunisasi'])->name('pelayanan.add_jenis_imunisasi');
+        Route::post('add/jenis-vitamin', [PelayananController::class, 'add_jenis_vitamin'])->name('pelayanan.add_jenis_vitamin');
+
+        // Keuangan
+        // Route::resource('/keuangan', KeuanganController::class);
+        // Route::get('/keuangan/report/', [KeuanganController::class, 'report'])->name('keuangan.report');
+    }
+);

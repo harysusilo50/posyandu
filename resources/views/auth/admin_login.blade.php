@@ -10,7 +10,7 @@
                             <h1 class="h4 text-gray-900 mb-3" style="font-weight: 500">Admin Login</h1>
                         </div>
                         <div class="text-center">
-                            <img class="w-50" src="{{ asset('img/login.png') }}" alt="login icon">
+                            <img class="w-25" src="{{ asset('img/login.png') }}" alt="login icon">
                         </div>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf

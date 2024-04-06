@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('nama_anak');
             $table->string('tgl_lahir');
             $table->string('usia');
-            $table->enum('role', ['admin', 'user']);
+            $table->enum('role', ['admin', 'user', 'bendahara', 'ketua_rt']);
             $table->enum('jenis_kelamin', ['laki_laki', 'perempuan']);
             $table->rememberToken();
             $table->timestamps();

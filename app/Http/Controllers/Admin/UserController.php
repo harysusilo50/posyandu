@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -15,6 +16,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $auth = Auth::user()->role ?? 'user';
         if ($search) {
             $data = User::Where('username', 'LIKE', "%$search%")
                 ->orWhere('no_hp', 'LIKE', "%$search%")
@@ -23,13 +25,18 @@ class UserController extends Controller
                 ->orWhere('nama_anak', 'LIKE', "%$search%")
                 ->orWhere('nama_ibu', 'LIKE', "%$search%")
                 ->orWhere('jenis_kelamin', 'LIKE', "%$search%")
+                ->when($auth == 'user', function ($query) {
+                    $query->where('id', Auth::id());
+                })
                 ->latest()
                 ->paginate(15)
                 ->withQueryString();
             return view('pages.user.index', compact('data', 'search'));
         }
 
-        $data = User::latest()->paginate(15)->withQueryString();
+        $data = User::when($auth == 'user', function ($query) {
+            $query->where('id', Auth::id());
+        })->latest()->paginate(15)->withQueryString();
 
         return view('pages.user.index', compact('data'));
     }
@@ -44,7 +51,7 @@ class UserController extends Controller
         $this->validate($request, [
             'username' => 'required|string|unique:users',
             'password' => 'required|string|confirmed',
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string',
             'alamat' => 'required',
             'no_hp' => 'required|numeric',
             'nik_ibu' => 'required|numeric',
@@ -97,7 +104,6 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string',
-            'role' => 'required|string|in:admin,user',
             'alamat' => 'required',
             'no_hp' => 'required|numeric',
             'nik_ibu' => 'required|numeric',
@@ -116,7 +122,6 @@ class UserController extends Controller
             if ($request->password) {
                 $user->password = Hash::make($request->password);
             }
-            $user->role = $request->role;
             $user->alamat = $request->alamat;
             $user->no_hp = $request->no_hp;
             $user->nik_ibu = $request->nik_ibu;
