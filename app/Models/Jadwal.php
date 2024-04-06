@@ -14,6 +14,6 @@ class Jadwal extends Model
 
     public function getFormatTanggalAttribute()
     {
-        return Carbon::parse($this->attributes['tanggal'])->format('l, d F Y | H:i');
+        return Carbon::parse($this->attributes['tanggal'])->isoFormat('dddd, D MMMM Y | HH:mm');
     }
 }

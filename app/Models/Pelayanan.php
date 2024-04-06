@@ -14,7 +14,7 @@ class Pelayanan extends Model
 
     public function getFormatTanggalPelayananAttribute()
     {
-        return Carbon::parse($this->attributes['tanggal_pelayanan'])->format('l, d F Y | H:i');
+        return Carbon::parse($this->attributes['tanggal_pelayanan'])->isoFormat('dddd, D MMMM Y | HH:mm');
     }
 
     public function user()
