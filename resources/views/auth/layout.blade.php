@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{ asset('img/unj.png') }}" type="image/x-icon">
+    <link href="{{ asset('compro/assets/img/logo.png') }}" rel="icon" />
     @include('layout.css')
     <title>@yield('title') | Posyandu</title>
 </head>

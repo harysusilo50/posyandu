@@ -22,15 +22,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::get('/', function () {
+    return view('index');
+});
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('login-admin', [LoginController::class, 'showLoginFormAdmin'])->name('admin.login');
 Route::group(
     ['middleware' => 'auth'],
     function () {
-        Route::get('/home', function () {
-            return view('pages.home');
-        });
-        Route::get('/', function () {
+        Route::get('/dashboard', function () {
             return view('pages.home');
         })->name('home');
 
