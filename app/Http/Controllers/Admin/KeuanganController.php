@@ -3,10 +3,69 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Keuangan;
 use Illuminate\Http\Request;
 
 class KeuanganController extends Controller
 {
+
+    public function index(Request $request)
+    {
+        $type = $request->get('type');
+        if ($type == 'in') {
+            $search = $request->get('search');
+            if ($search) {
+                $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
+                    ->orWhere('type','masuk')
+                    ->orWhere('jenis', 'LIKE', "%$search%")
+                    ->orWhere('nominal', 'LIKE', "%$search%")
+                    ->orWhere('tanggal', 'LIKE', "%$search%")
+                    ->latest()
+                    ->paginate(15)
+                    ->withQueryString();
+                return view('pages.keuangan.index', compact('data', 'search','type'));
+            }
+    
+            $data = Keuangan::where('type','masuk')->latest()->paginate(15)->withQueryString();
+    
+            return view('pages.keuangan.index', compact('data','type'));
+        }else if($type=='out'){
+            $search = $request->get('search');
+            if ($search) {
+                $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
+                    ->orWhere('type','keluar')
+                    ->orWhere('jenis', 'LIKE', "%$search%")
+                    ->orWhere('nominal', 'LIKE', "%$search%")
+                    ->orWhere('tanggal', 'LIKE', "%$search%")
+                    ->latest()
+                    ->paginate(15)
+                    ->withQueryString();
+                return view('pages.keuangan.index', compact('data', 'search','type'));
+            }
+    
+            $data = Keuangan::where('type','keluar')->latest()->paginate(15)->withQueryString();
+    
+            return view('pages.keuangan.index', compact('data','type'));
+        }else{
+            $search = $request->get('search');
+            if ($search) {
+                $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
+                    ->orWhere('jenis', 'LIKE', "%$search%")
+                    ->orWhere('nominal', 'LIKE', "%$search%")
+                    ->orWhere('tanggal', 'LIKE', "%$search%")
+                    ->latest()
+                    ->paginate(15)
+                    ->withQueryString();
+                return view('pages.keuangan.index', compact('data', 'search','type'));
+            }
+    
+            $data = Keuangan::latest()->paginate(15)->withQueryString();
+    
+            return view('pages.keuangan.index', compact('data','type'));
+        }
+     
+    }
+
 
     // public function index(Request $request)
     // {

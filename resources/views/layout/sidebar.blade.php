@@ -60,19 +60,19 @@
     </div>
 
     <li class="nav-item ">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('keuangan.index',['type'=>'in']) }}">
             <i class="fas fa-fw fa-cash-register"></i>
             <span>Data Pemasukan</span></a>
     </li>
 
     <li class="nav-item ">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('keuangan.index',['type'=>'out']) }}">
             <i class="fas fa-fw fa-money-bill"></i>
             <span>Data Pengeluaran</span></a>
     </li>
 
     <li class="nav-item ">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('keuangan.index') }}">
             <i class="fas fa-fw fa-file"></i>
             <span>Laporan Keuangan</span></a>
     </li>

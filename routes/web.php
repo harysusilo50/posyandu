@@ -58,7 +58,7 @@ Route::group(
         Route::post('add/jenis-vitamin', [PelayananController::class, 'add_jenis_vitamin'])->name('pelayanan.add_jenis_vitamin');
 
         // Keuangan
-        // Route::resource('/keuangan', KeuanganController::class);
-        // Route::get('/keuangan/report/', [KeuanganController::class, 'report'])->name('keuangan.report');
+        Route::resource('/keuangan', KeuanganController::class);
+        Route::get('/keuangan/report/', [KeuanganController::class, 'report'])->name('keuangan.report');
     }
 );
