@@ -1,18 +1,19 @@
 @extends('layout.app')
 @section('title', 'Keuangan')
 @section('content')
-@php
-    if($type=='in'){
-        $tipe = 'Pemasukan';
-    }else if($type=='out'){
-        $tipe = 'Pengeluaran';
-    }else{
-        $tipe = '';
-    }
-@endphp
+    @php
+        if ($type == 'in') {
+            $tipe = 'Pemasukan';
+        } elseif ($type == 'out') {
+            $tipe = 'Pengeluaran';
+        } else {
+            $tipe = '';
+        }
+    @endphp
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-muted"><i class="fas fa-money-bill mr-1"></i> Data {{ $tipe }} Keuangan </h6>
+            <h6 class="m-0 font-weight-bold text-muted"><i class="fas fa-money-bill mr-1"></i> Data {{ $tipe }}
+                Keuangan </h6>
         </div>
         <div class="card-body">
             <div class="d-lg-flex justify-content-lg-between mb-3 d-block">
@@ -64,39 +65,11 @@
                                 <td class="text-center" style="width:5%">
                                     {{ $data->firstItem() + $loop->index }}</td>
                                 <td>
-                                    {{ $item->nama_peralatan }}
+                                    {{ $item->type }}
                                 </td>
-                                <td>{{ $item->jumlah . '/' . $item->satuan }}</td>
-                                <td class="text-center" style="width: 10%">
-                                    @switch($item->status)
-                                        @case('bagus')
-                                            <span class="badge badge-pill badge-primary">Bagus</span>
-                                        @break
-
-                                        @case('rusak')
-                                            <span class="badge badge-pill badge-danger">Rusak</span>
-                                        @break
-
-                                        @case('rusak_sebagian')
-                                            <span class="badge badge-pill badge-warning">Rusak Sebagian</span>
-                                        @break
-
-                                        @case('hilang')
-                                            <span class="badge badge-pill badge-dark">Hilang</span>
-                                        @break
-
-                                        @case('hilang_sebagian')
-                                            <span class="badge badge-pill badge-secondary">Hilang Sebagian</span>
-                                        @break
-
-                                        @default
-                                            <span class="badge rounded-pill text-bg-danger">{{ $item->status }}</span>
-                                        @break
-                                    @endswitch
-                                </td>
-                                <td class="text-center">
-                                    {{ $item->format_tgl_pembelian }}
-                                </td>
+                                <td>{{ $item->jenis }}</td>
+                                <td>{{ $item->nomninal }}</td>
+                                <td>{{ $item->tanggal }}</td>
                                 <td>{{ $item->keterangan }}</td>
 
                                 {{-- <td class="text-center" style="width: 10%">
