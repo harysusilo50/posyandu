@@ -12,70 +12,73 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ Request::is('home') ? 'active' : '' }}">
-        <a class="nav-link" href="">
+    <li class="nav-item {{ Request::is('dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('home') }}">
             <i class="fas fa-fw fa-home"></i>
             <span>Dashboard</span></a>
     </li>
+    @if (Auth::user()->role != 'bendahara')
+        <hr class="sidebar-divider">
+        {{-- User --}}
+        <div class="sidebar-heading">
+            User
+        </div>
+        <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('user.index') }}">
+                <i class="fas fa-fw fa-user-alt"></i>
+                <span>List All User</span></a>
+        </li>
 
-    <hr class="sidebar-divider">
-    {{-- User --}}
-    <div class="sidebar-heading">
-        User
-    </div>
-    <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('user.index') }}">
-            <i class="fas fa-fw fa-user-alt"></i>
-            <span>List All User</span></a>
-    </li>
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            Main Menu
+        </div>
+        <li class="nav-item {{ Request::is('anggota') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('anggota.index') }}">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Data Anggota</span></a>
+        </li>
+        <li class="nav-item {{ Request::is('peralatan') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('peralatan.index') }}">
+                <i class="fas fa-fw fa-medkit"></i>
+                <span>Data Peralatan</span></a>
+        </li>
+        <li class="nav-item {{ Request::is('jadwal') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('jadwal.index') }}">
+                <i class="fas fa-fw fa-calendar-alt"></i>
+                <span>Data Jadwal</span></a>
+        </li>
+        <li class="nav-item {{ Request::is('pelayanan') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('pelayanan.index') }}">
+                <i class="fas fa-fw fa-ambulance"></i>
+                <span>Data Pelayanan</span></a>
+        </li>
+    @endif
+    @if (Auth::user()->role == 'bendahara' || Auth::user()->role == 'admin')
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            Keuangan
+        </div>
 
-    <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        Main Menu
-    </div>
-    <li class="nav-item {{ Request::is('anggota') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('anggota.index') }}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Data Anggota</span></a>
-    </li>
-    <li class="nav-item {{ Request::is('peralatan') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('peralatan.index') }}">
-            <i class="fas fa-fw fa-medkit"></i>
-            <span>Data Peralatan</span></a>
-    </li>
-    <li class="nav-item {{ Request::is('jadwal') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('jadwal.index') }}">
-            <i class="fas fa-fw fa-calendar-alt"></i>
-            <span>Data Jadwal</span></a>
-    </li>
-    <li class="nav-item {{ Request::is('pelayanan') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('pelayanan.index') }}">
-            <i class="fas fa-fw fa-ambulance"></i>
-            <span>Data Pelayanan</span></a>
-    </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="{{ route('keuangan.index', ['type' => 'in']) }}">
+                <i class="fas fa-fw fa-cash-register"></i>
+                <span>Data Pemasukan</span></a>
+        </li>
 
-    <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        Keuangan
-    </div>
+        <li class="nav-item ">
+            <a class="nav-link" href="{{ route('keuangan.index', ['type' => 'out']) }}">
+                <i class="fas fa-fw fa-money-bill"></i>
+                <span>Data Pengeluaran</span></a>
+        </li>
 
-    <li class="nav-item ">
-        <a class="nav-link" href="{{ route('keuangan.index',['type'=>'in']) }}">
-            <i class="fas fa-fw fa-cash-register"></i>
-            <span>Data Pemasukan</span></a>
-    </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="{{ route('keuangan.index') }}">
+                <i class="fas fa-fw fa-file"></i>
+                <span>Laporan Keuangan</span></a>
+        </li>
+    @endif
 
-    <li class="nav-item ">
-        <a class="nav-link" href="{{ route('keuangan.index',['type'=>'out']) }}">
-            <i class="fas fa-fw fa-money-bill"></i>
-            <span>Data Pengeluaran</span></a>
-    </li>
-
-    <li class="nav-item ">
-        <a class="nav-link" href="{{ route('keuangan.index') }}">
-            <i class="fas fa-fw fa-file"></i>
-            <span>Laporan Keuangan</span></a>
-    </li>
 
     <hr class="sidebar-divider">
 

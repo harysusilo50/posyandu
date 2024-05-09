@@ -1,15 +1,112 @@
+@php
+    if ($type == 'in') {
+        $tipe = 'Pemasukan';
+    } elseif ($type == 'out') {
+        $tipe = 'Pengeluaran';
+    } else {
+        $tipe = '';
+    }
+@endphp
 @extends('layout.app')
-@section('title', 'Keuangan')
+@section('title', $tipe . ' Keuangan ')
 @section('content')
-    @php
-        if ($type == 'in') {
-            $tipe = 'Pemasukan';
-        } elseif ($type == 'out') {
-            $tipe = 'Pengeluaran';
-        } else {
-            $tipe = '';
-        }
-    @endphp
+    @if ($tipe == '')
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card border-left-secondary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-secondary text-uppercase mb-1">
+                                    Total Kas Keuangan</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
+                                    {{ number_format($total_keseluruhan, 0, ',', '.') }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    <div class="row">
+        @if ($tipe == 'Pemasukan')
+            <div class="col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Pemasukan</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
+                                    {{ number_format($total_masuk, 0, ',', '.') }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-arrow-alt-circle-down fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @elseif ($tipe == 'Pengeluaran')
+            <div class="col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    Total Pengeluaran</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
+                                    {{ number_format($total_keluar, 0, ',', '.') }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-arrow-alt-circle-up fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div class="col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Pemasukan</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
+                                    {{ number_format($total_masuk, 0, ',', '.') }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-arrow-alt-circle-down fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    Total Pengeluaran</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">Rp
+                                    {{ number_format($total_keluar, 0, ',', '.') }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-arrow-alt-circle-up fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-muted"><i class="fas fa-money-bill mr-1"></i> Data {{ $tipe }}
@@ -18,8 +115,8 @@
         <div class="card-body">
             <div class="d-lg-flex justify-content-lg-between mb-3 d-block">
                 <div class="my-2">
-                    @if (Auth::user()->role == 'admin')
-                        <a href="{{ route('peralatan.create') }}" class="btn btn-primary btn-sm">
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara')
+                        <a href="{{ route('keuangan.create') }}" class="btn btn-primary btn-sm">
                             New
                             <i class="fas fa-plus-circle"></i>
                         </a>
@@ -54,7 +151,7 @@
                             <th class="text-center">Nominal</th>
                             <th class="text-center">Tanggal</th>
                             <th class="text-center">Keterangan</th>
-                            @if (Auth::user()->role == 'admin')
+                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara')
                                 <th class="text-center">Aksi</th>
                             @endif
                         </tr>
@@ -64,38 +161,30 @@
                             <tr>
                                 <td class="text-center" style="width:5%">
                                     {{ $data->firstItem() + $loop->index }}</td>
-                                <td>
-                                    {{ $item->type }}
-                                </td>
-                                <td>{{ $item->jenis }}</td>
-                                <td>{{ $item->nomninal }}</td>
-                                <td>{{ $item->tanggal }}</td>
-                                <td>{{ $item->keterangan }}</td>
-
-                                {{-- <td class="text-center" style="width: 10%">
-                                    @switch($item->role)
-                                        @case('superadmin')
-                                            <span class="badge rounded-pill text-bg-primary">Superadmin</span>
+                                <td class="text-center">
+                                    @switch($item->type)
+                                        @case('masuk')
+                                            <span class="badge badge-primary">MASUK</span>
                                         @break
 
-                                        @case('admin')
-                                            <span class="badge rounded-pill text-bg-secondary">Administrator</span>
-                                        @break
-
-                                        @case('cashier')
-                                            <span class="badge rounded-pill text-bg-warning">Cashier</span>
+                                        @case('keluar')
+                                            <span class="badge badge-danger">KELUAR</span>
                                         @break
 
                                         @default
-                                            <span class="badge rounded-pill text-bg-danger">{{ $item->role }}</span>
+                                            <span class="badge badge-secondary">{{ $item->type }}</span>
                                         @break
                                     @endswitch
-                                </td> --}}
-                                @if (Auth::user()->role == 'admin')
+                                </td>
+                                <td>{{ $item->jenis }}</td>
+                                <td>Rp {{ $item->format_nominal }}</td>
+                                <td>{{ $item->format_tanggal }}</td>
+                                <td>{{ $item->keterangan }}</td>
+                                @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara')
                                     <td class="text-center" style="width: 10%">
                                         <div class="d-flex row justify-content-center">
                                             <a class="btn btn-success btn-sm col-8 m-1"
-                                                href="{{ route('peralatan.edit', $item->id) }}">
+                                                href="{{ route('keuangan.edit', $item->id) }}">
                                                 Edit <i class="bi bi-pencil ms-2"></i>
                                             </a>
                                             <!-- Button trigger modal -->
@@ -109,7 +198,7 @@
                                             role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <form action="{{ route('peralatan.destroy', $item->id) }}"
+                                                    <form action="{{ route('keuangan.destroy', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -139,7 +228,7 @@
                     </tbody>
                 </table>
                 <div class="my-2">
-                    <a href="{{ route('peralatan.report') }}" class="btn btn-danger btn-sm" target="_blank">Cetak
+                    <a href="{{ route('keuangan.report') }}" class="btn btn-danger btn-sm" target="_blank">Cetak
                         <i class="fas fa-file-pdf"></i></a>
                 </div>
                 <div class="d-flex justify-content-center">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,11 +14,11 @@ class Keuangan extends Model
 
     public function getFormatNominalAttribute()
     {
-        return number_format($this->amount, 0, ',', '.');
+        return number_format($this->nominal, 0, ',', '.');
     }
 
     public function getFormatTanggalAttribute()
     {
-        return \Carbon\Carbon::parse($this->tanggal)->format('d M Y H:i:s');
+        return Carbon::parse($this->attributes['tanggal'])->isoFormat('dddd, D MMMM Y | HH:mm');
     }
 }

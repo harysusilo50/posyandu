@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\KeuanganController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AnggotaController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\PeralatanController;
 use App\Http\Controllers\Auth\LoginController;
@@ -30,9 +31,7 @@ Route::get('login-admin', [LoginController::class, 'showLoginFormAdmin'])->name(
 Route::group(
     ['middleware' => 'auth'],
     function () {
-        Route::get('/dashboard', function () {
-            return view('pages.home');
-        })->name('home');
+        Route::get('/dashboard', [HomeController::class,'index'])->name('home');
 
         // User
         Route::resource('user', UserController::class);
@@ -59,6 +58,6 @@ Route::group(
 
         // Keuangan
         Route::resource('/keuangan', KeuanganController::class);
-        Route::get('/keuangan/report/', [KeuanganController::class, 'report'])->name('keuangan.report');
+        Route::get('/keuangan-report/', [KeuanganController::class, 'report'])->name('keuangan.report');
     }
 );

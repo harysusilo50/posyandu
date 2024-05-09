@@ -14,6 +14,6 @@ class Anggota extends Model
 
     public function getFormatTglLahirAttribute()
     {
-        return Carbon::parse($this->attributes['tgl_lahir'])->format('d F Y');
+        return Carbon::parse($this->attributes['tgl_lahir'])->isoFormat('d MMMM Y');
     }
 }

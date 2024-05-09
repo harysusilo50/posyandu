@@ -15,6 +15,6 @@ class Peralatan extends Model
 
     public function getFormatTglPembelianAttribute()
     {
-        return Carbon::parse($this->attributes['tgl_pembelian'])->format('l, d F Y');
+        return Carbon::parse($this->attributes['tgl_pembelian'])->isoFormat('dddd, D MMMM Y');
     }
 }

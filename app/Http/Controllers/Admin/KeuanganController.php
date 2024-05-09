@@ -4,49 +4,56 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Keuangan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KeuanganController extends Controller
 {
 
     public function index(Request $request)
     {
+        $total_masuk = Keuangan::where('type', 'masuk')->sum('nominal');
+        $total_keluar = Keuangan::where('type', 'keluar')->sum('nominal');
+        $total_keseluruhan =  $total_masuk - $total_keluar;
+
         $type = $request->get('type');
         if ($type == 'in') {
             $search = $request->get('search');
             if ($search) {
                 $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
-                    ->orWhere('type','masuk')
+                    ->orWhere('type', 'masuk')
                     ->orWhere('jenis', 'LIKE', "%$search%")
                     ->orWhere('nominal', 'LIKE', "%$search%")
                     ->orWhere('tanggal', 'LIKE', "%$search%")
                     ->latest()
                     ->paginate(15)
                     ->withQueryString();
-                return view('pages.keuangan.index', compact('data', 'search','type'));
+                return view('pages.keuangan.index', compact('data', 'search', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
             }
-    
-            $data = Keuangan::where('type','masuk')->latest()->paginate(15)->withQueryString();
-    
-            return view('pages.keuangan.index', compact('data','type'));
-        }else if($type=='out'){
+
+            $data = Keuangan::where('type', 'masuk')->latest()->paginate(15)->withQueryString();
+
+            return view('pages.keuangan.index', compact('data', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
+        } else if ($type == 'out') {
             $search = $request->get('search');
             if ($search) {
                 $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
-                    ->orWhere('type','keluar')
+                    ->orWhere('type', 'keluar')
                     ->orWhere('jenis', 'LIKE', "%$search%")
                     ->orWhere('nominal', 'LIKE', "%$search%")
                     ->orWhere('tanggal', 'LIKE', "%$search%")
                     ->latest()
                     ->paginate(15)
                     ->withQueryString();
-                return view('pages.keuangan.index', compact('data', 'search','type'));
+                return view('pages.keuangan.index', compact('data', 'search', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
             }
-    
-            $data = Keuangan::where('type','keluar')->latest()->paginate(15)->withQueryString();
-    
-            return view('pages.keuangan.index', compact('data','type'));
-        }else{
+
+            $data = Keuangan::where('type', 'keluar')->latest()->paginate(15)->withQueryString();
+
+            return view('pages.keuangan.index', compact('data', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
+        } else {
             $search = $request->get('search');
             if ($search) {
                 $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
@@ -56,132 +63,94 @@ class KeuanganController extends Controller
                     ->latest()
                     ->paginate(15)
                     ->withQueryString();
-                return view('pages.keuangan.index', compact('data', 'search','type'));
+                return view('pages.keuangan.index', compact('data', 'search', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
             }
-    
+
             $data = Keuangan::latest()->paginate(15)->withQueryString();
-    
-            return view('pages.keuangan.index', compact('data','type'));
+
+            return view('pages.keuangan.index', compact('data', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
         }
-     
     }
 
+    public function create()
+    {
+        return view('pages.keuangan.create');
+    }
 
-    // public function index(Request $request)
-    // {
-    //     $search = $request->get('search');
-    //     if ($search) {
-    //         $data = Peralatan::Where('nama_peralatan', 'LIKE', "%$search%")
-    //             ->orWhere('status', 'LIKE', "%$search%")
-    //             ->latest()
-    //             ->paginate(15)
-    //             ->withQueryString();
-    //         return view('pages.peralatan.index', compact('data', 'search'));
-    //     }
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $keuangan = new Keuangan();
+            $keuangan->type = $request->type;
+            $keuangan->jenis = $request->jenis;
+            $keuangan->nominal = $request->nominal;
+            $keuangan->tanggal = $request->tanggal;
+            $keuangan->keterangan = $request->keterangan ?? '';
+            $keuangan->save();
+            DB::commit();
+            Alert::success('Success', 'Berhasil menambahkan data keuangan!');
+            return redirect()->route('keuangan.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
 
-    //     $data = Peralatan::latest()->paginate(15)->withQueryString();
+    public function edit($id)
+    {
+        $keuangan = Keuangan::findOrFail($id);
+        return view('pages.keuangan.edit', compact('keuangan'));
+    }
 
-    //     return view('pages.peralatan.index', compact('data'));
-    // }
+    public function update(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $keuangan = Keuangan::findOrFail($id);
+            $keuangan->type = $request->type;
+            $keuangan->jenis = $request->jenis;
+            $keuangan->nominal = $request->nominal;
+            $keuangan->tanggal = $request->tanggal;
+            $keuangan->keterangan = $request->keterangan ?? '';
+            $keuangan->save();
+            DB::commit();
+            Alert::success('Success', 'Berhasil mengubah data keuangan!');
+            return redirect()->route('keuangan.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
 
-    // public function create()
-    // {
-    //     return view('pages.peralatan.create');
-    // }
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+            $keuangan = Keuangan::findOrFail($id);
+            $keuangan->delete();
 
-    // public function store(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'nama_peralatan' => 'required|string',
-    //         'jumlah' => 'required|numeric',
-    //         'satuan' => 'required',
-    //         'tgl_pembelian' => 'required',
-    //         'status' => 'required',
-    //     ]);
+            DB::commit();
+            Alert::success('Success', 'Data Keuangan berhasil dihapus!');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
 
-    //     try {
-    //         DB::beginTransaction();
-    //         $peralatan = new Peralatan();
-    //         $peralatan->nama_peralatan = $request->nama_peralatan;
-    //         $peralatan->jumlah = $request->jumlah;
-    //         $peralatan->satuan = $request->satuan;
-    //         $peralatan->tgl_pembelian = $request->tgl_pembelian;
-    //         $peralatan->status = $request->status;
-    //         $peralatan->keterangan = $request->keterangan ?? '';
-    //         $peralatan->save();
-    //         DB::commit();
-    //         Alert::success('Success', 'Berhasil menambahkan data peralatan!');
-    //         return redirect()->route('peralatan.index');
-    //     } catch (\Throwable $th) {
-    //         DB::rollBack();
-    //         Alert::error('Failed', $th->getMessage());
-    //         return redirect()->back();
-    //     }
-    // }
+    public function report()
+    {
+        $keuangan = Keuangan::all();
 
-    // public function show($id)
-    // {
-    //     //
-    // }
+        $total_masuk = Keuangan::where('type', 'masuk')->sum('nominal');
+        $total_keluar = Keuangan::where('type', 'keluar')->sum('nominal');
+        $total_keseluruhan =  $total_masuk - $total_keluar;
 
-    // public function edit($id)
-    // {
-    //     $peralatan = Peralatan::findOrFail($id);
-    //     return view('pages.peralatan.edit', compact('peralatan'));
-    // }
-
-    // public function update(Request $request, $id)
-    // {
-    //     $this->validate($request, [
-    //         'nama_peralatan' => 'required|string',
-    //         'jumlah' => 'required|numeric',
-    //         'satuan' => 'required',
-    //         'tgl_pembelian' => 'required',
-    //         'status' => 'required',
-    //     ]);
-
-    //     try {
-    //         DB::beginTransaction();
-    //         $peralatan = Peralatan::findOrFail($id);
-    //         $peralatan->nama_peralatan = $request->nama_peralatan;
-    //         $peralatan->jumlah = $request->jumlah;
-    //         $peralatan->satuan = $request->satuan;
-    //         $peralatan->tgl_pembelian = $request->tgl_pembelian;
-    //         $peralatan->status = $request->status;
-    //         $peralatan->keterangan = $request->keterangan ?? '';
-    //         $peralatan->save();
-    //         DB::commit();
-    //         Alert::success('Success', 'Berhasil mengubah data peralatan!');
-    //         return redirect()->route('peralatan.index');
-    //     } catch (\Throwable $th) {
-    //         DB::rollBack();
-    //         Alert::error('Failed', $th->getMessage());
-    //         return redirect()->back();
-    //     }
-    // }
-
-    // public function destroy($id)
-    // {
-    //     try {
-    //         DB::beginTransaction();
-    //         $peralatan = Peralatan::findOrFail($id);
-    //         $peralatan->delete();
-
-    //         DB::commit();
-    //         Alert::success('Success', 'Peralatan berhasil dihapus!');
-    //         return redirect()->back();
-    //     } catch (\Throwable $th) {
-    //         DB::rollBack();
-    //         Alert::error('Failed', $th->getMessage());
-    //         return redirect()->back();
-    //     }
-    // }
-
-    // public function export_pdf()
-    // {
-    //     $peralatan = Peralatan::all();
-
-    //     $pdf = Pdf::loadview('pages.peralatan.report', ['peralatan' => $peralatan])->setPaper('a4', 'landscape');
-    //     return $pdf->stream('peralatan-report_' . now() . '.pdf');
-    // }
+        $pdf = Pdf::loadview('pages.keuangan.report', ['keuangan' => $keuangan, 'total_masuk' => $total_masuk, 'total_keluar' => $total_keluar, 'total_keseluruhan' => $total_keseluruhan])->setPaper('a4', 'landscape');
+        return $pdf->stream('keuangan-report_' . now() . '.pdf');
+    }
 }

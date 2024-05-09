@@ -1,10 +1,10 @@
 @extends('layout.app')
-@section('title', 'Tambah Data Keuangan')
+@section('title', 'Edit Data Keuangan')
 @section('content')
     <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h6 class="m-0 font-weight-bold text-muted"><i class="fas fa-money-bill mr-1"></i> Tambah Data Baru</h6>
+            <h6 class="m-0 font-weight-bold text-muted"><i class="fas fa-money-bill mr-1"></i> Edit Data Keuangan</h6>
         </div>
         <!-- Card Body -->
         <div class="card-body">
@@ -22,15 +22,16 @@
 
                 </div>
             @endif
-            <form method="POST" action="{{ route('keuangan.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('keuangan.update', $keuangan->id) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <label class="col-form-label" for="type" style="font-weight: 500">Tipe Transaksi</label>
                     <select id="type" class="form-control @error('type') is-invalid @enderror"
                         name="type" required>
-                        <option value="masuk"{{ old('type') == 'masuk' ? ' selected' : '' }}>
+                        <option value="masuk"{{ $keuangan->type == 'masuk' ? ' selected' : '' }}>
                             Masuk</option>
-                        <option value="keluar"{{ old('type') == 'keluar' ? ' selected' : '' }}>
+                        <option value="keluar"{{ $keuangan->type == 'keluar' ? ' selected' : '' }}>
                             Keluar</option>
                     </select>
                     @error('type')
@@ -42,7 +43,7 @@
                 <div class="form-group mb-1">
                     <label class="col-form-label" for="jenis" style="font-weight: 500">Jenis Transaksi</label>
                     <input id="jenis" type="text" class="form-control @error('jenis') is-invalid @enderror"
-                        name="jenis" value="{{ old('jenis') }}" required autocomplete="jenis" autofocus>
+                        name="jenis" value="{{ $keuangan->jenis }}" required autocomplete="jenis" autofocus>
                     @error('jenis')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -52,7 +53,7 @@
                 <div class="form-group mb-1">
                     <label class="col-form-label" for="nominal" style="font-weight: 500">Nominal Transaksi</label>
                     <input id="nominal" type="number" min="0" class="form-control @error('nominal') is-invalid @enderror"
-                        name="nominal" value="{{ old('nominal') }}" required autocomplete="nominal" autofocus>
+                        name="nominal" value="{{$keuangan->nominal }}" required autocomplete="nominal" autofocus>
                     @error('nominal')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -62,7 +63,7 @@
                 <div class="form-group mb-1">
                     <label class="col-form-label" for="tanggal" style="font-weight: 500">Tanggal</label>
                     <input id="tanggal" type="datetime-local" class="form-control @error('tanggal') is-invalid @enderror"
-                        name="tanggal" value="{{ old('tanggal') }}" required autocomplete="tanggal" autofocus>
+                        name="tanggal" value="{{ $keuangan->tanggal }}" required autocomplete="tanggal" autofocus>
                     @error('tanggal')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -71,7 +72,7 @@
                 </div>
                 <div class="form-group">
                     <label for="keterangan" class="col-form-label" style="font-weight: 500">Keterangan</label>
-                    <textarea class="form-control" id="keterangan" name="keterangan" rows="5"></textarea>
+                    <textarea class="form-control" id="keterangan" name="keterangan" rows="5">{{ $keuangan->keterangan }}</textarea>
                 </div>
                 <div class="form-group col-12 text-center">
                     <a href="{{ route('anggota.index') }}" class="btn btn-danger">Batal</a>
