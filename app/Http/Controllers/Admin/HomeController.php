@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $anggota = Anggota::count();
         $jadwal = Jadwal::count();
-        $user = User::count();
+        $user = User::where('role','user')->count();
         $peralatan = Peralatan::count();
         $pelayanan = Pelayanan::count();
         $total_masuk = Keuangan::where('type', 'masuk')->sum('nominal');
