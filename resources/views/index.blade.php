@@ -29,6 +29,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
@@ -74,13 +75,14 @@
                         Portal Website Posyandu Flamboyan
                     </h1>
                     <div data-aos="fade-up" data-aos-delay="600">
-                        <div class="text-center text-lg-start">
+                        <div class="text-center text-lg-start mb-3">
                             <a href="{{ route('register') }}"
                                 class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
                                 <span>Daftar Sekarang</span>
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
+                   <p class="my-2">sudah memiliki akun? <u><a class="link-underline" href="{{ route('login') }}">Masuk disini </a></u></p>
                     </div>
                 </div>
                 <div class="col-lg-6 hero-img text-end" data-aos="zoom-out" data-aos-delay="200">

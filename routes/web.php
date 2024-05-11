@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 Route::get('/', function () {
     return view('index');
-});
+})->name('compro');
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('login-admin', [LoginController::class, 'showLoginFormAdmin'])->name('admin.login');
 Route::group(

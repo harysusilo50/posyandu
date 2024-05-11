@@ -26,7 +26,13 @@
         <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('user.index') }}">
                 <i class="fas fa-fw fa-user-alt"></i>
-                <span>List All User</span></a>
+                @if (Auth::user()->role == 'user' || Auth::user()->role == 'ketua_rt')
+                <span>Profile {{ Auth::user()->username }}</span>
+                @else
+                    <span>Data Semua User</span>
+                @endif
+            </a>
+
         </li>
 
         <hr class="sidebar-divider">

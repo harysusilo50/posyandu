@@ -16,6 +16,7 @@ class HomeController extends Controller
     public function index()
     {
         $anggota = Anggota::count();
+        $peralatan = Peralatan::count();
         $jadwal = Jadwal::count();
         $user = User::where('role','user')->count();
         $peralatan = Peralatan::count();
@@ -26,6 +27,7 @@ class HomeController extends Controller
 
         return view('pages.home', compact(
             'anggota',
+            'peralatan',
             'jadwal',
             'user',
             'peralatan',

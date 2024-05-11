@@ -82,6 +82,6 @@ class LoginController extends Controller
     protected function loggedOut(Request $request)
     {
         Alert::success('Success', 'Berhasil Logout!');
-        return redirect()->route('login');
+        return redirect()->route('compro');
     }
 }

@@ -18,7 +18,10 @@ class PelayananController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $choose_bulan = $request->get('choose_bulan');
         $auth = Auth::user()->role ?? 'user';
+        $bulan = Pelayanan::select(DB::raw('DISTINCT MONTHNAME(tanggal_pelayanan) AS nama_bulan, MONTH(tanggal_pelayanan) AS bulan'))->get();
+
         if ($search) {
             $data = Pelayanan::with('user')->where('nama', 'LIKE', "%$search%")
                 ->orWhere('jenis_imunisasi', 'LIKE', "%$search%")
@@ -29,14 +32,24 @@ class PelayananController extends Controller
                 ->latest()
                 ->paginate(15)
                 ->withQueryString();
-            return view('pages.pelayanan.index', compact('data', 'search'));
+            return view('pages.pelayanan.index', compact('data', 'search', 'bulan','choose_bulan'));
+        }
+        if ($choose_bulan) {
+            $data = Pelayanan::with('user')->whereRaw('MONTH(tanggal_pelayanan) = ?', [$choose_bulan])
+                ->when($auth == 'user', function ($query) {
+                    $query->where('user_id', Auth::id());
+                })
+                ->latest()
+                ->paginate()
+                ->withQueryString();
+            return view('pages.pelayanan.index', compact('data', 'search', 'bulan','choose_bulan'));
         }
 
         $data = Pelayanan::with('user')->when($auth == 'user', function ($query) {
             $query->where('user_id', Auth::id());
         })->latest()->paginate(15)->withQueryString();
 
-        return view('pages.pelayanan.index', compact('data'));
+        return view('pages.pelayanan.index', compact('data', 'bulan','choose_bulan'));
     }
 
     public function create()
