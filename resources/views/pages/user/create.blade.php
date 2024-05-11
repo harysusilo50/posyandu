@@ -156,6 +156,10 @@
                             Admin</option>
                         <option value="user"{{ old('role') == 'user' ? ' selected' : '' }}>
                             User</option>
+                        <option value="ketua_rt"{{ old('role') == 'ketua_rt' ? ' selected' : '' }}>
+                            Ketua RT</option>
+                        <option value="bendahara"{{ old('role') == 'bendahara' ? ' selected' : '' }}>
+                            Bendahara</option>
                     </select>
                     @error('role')
                         <span class="invalid-feedback" role="alert">
