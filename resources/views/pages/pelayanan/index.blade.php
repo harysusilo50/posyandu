@@ -41,7 +41,7 @@
                             <option value="" {{ empty($choose_bulan) ? 'selected' : '' }}>Semua Bulan</option>
                             @foreach ($bulan as $item)
                                 <option value="{{ $item->bulan }}"
-                                    {{ $choose_bulan == $item->nama_bulan ? 'selected' : '' }}>{{ $item->nama_bulan }}</option>
+                                    {{ $choose_bulan == $item->bulan ? 'selected' : '' }}>{{ $item->nama_bulan }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">

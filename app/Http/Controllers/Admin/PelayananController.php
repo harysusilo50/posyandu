@@ -54,7 +54,7 @@ class PelayananController extends Controller
 
     public function create()
     {
-        $user = User::all();
+        $user = User::where('role','user')->get();
         $jenis_imunisasi = JenisImunisasi::all();
         $jenis_vitamin = JenisVitamin::all();
         return view('pages.pelayanan.create', compact('jenis_imunisasi', 'jenis_vitamin', 'user'));
@@ -101,7 +101,7 @@ class PelayananController extends Controller
     public function edit($id)
     {
         $pelayanan = Pelayanan::findOrFail($id);
-        $user = User::all();
+        $user = User::where('role','user')->get();
         $jenis_imunisasi = JenisImunisasi::all();
         $jenis_vitamin = JenisVitamin::all();
         return view('pages.pelayanan.edit', compact('jenis_imunisasi', 'jenis_vitamin', 'user', 'pelayanan'));
