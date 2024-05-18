@@ -14,63 +14,59 @@ class KeuanganController extends Controller
 
     public function index(Request $request)
     {
+        // Hitung total masuk dan keluar
         $total_masuk = Keuangan::where('type', 'masuk')->sum('nominal');
         $total_keluar = Keuangan::where('type', 'keluar')->sum('nominal');
-        $total_keseluruhan =  $total_masuk - $total_keluar;
+        $total_keseluruhan = $total_masuk - $total_keluar;
 
+        // Ambil bulan untuk dropdown
+        $bulan = Keuangan::select(DB::raw('DISTINCT MONTHNAME(tanggal) AS nama_bulan, MONTH(tanggal) AS bulan'))->get();
+        $choose_bulan = $request->get('choose_bulan');
+
+        // Ambil tipe dan pencarian dari request
         $type = $request->get('type');
+        $search = $request->get('search');
+
+        // Siapkan query dasar
+        $query = Keuangan::query();
+
+        // Filter berdasarkan tipe
         if ($type == 'in') {
-            $search = $request->get('search');
-            if ($search) {
-                $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
-                    ->orWhere('type', 'masuk')
-                    ->orWhere('jenis', 'LIKE', "%$search%")
-                    ->orWhere('nominal', 'LIKE', "%$search%")
-                    ->orWhere('tanggal', 'LIKE', "%$search%")
-                    ->latest()
-                    ->paginate(15)
-                    ->withQueryString();
-                return view('pages.keuangan.index', compact('data', 'search', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
-            }
-
-            $data = Keuangan::where('type', 'masuk')->latest()->paginate(15)->withQueryString();
-
-            return view('pages.keuangan.index', compact('data', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
-        } else if ($type == 'out') {
-            $search = $request->get('search');
-            if ($search) {
-                $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
-                    ->orWhere('type', 'keluar')
-                    ->orWhere('jenis', 'LIKE', "%$search%")
-                    ->orWhere('nominal', 'LIKE', "%$search%")
-                    ->orWhere('tanggal', 'LIKE', "%$search%")
-                    ->latest()
-                    ->paginate(15)
-                    ->withQueryString();
-                return view('pages.keuangan.index', compact('data', 'search', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
-            }
-
-            $data = Keuangan::where('type', 'keluar')->latest()->paginate(15)->withQueryString();
-
-            return view('pages.keuangan.index', compact('data', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
-        } else {
-            $search = $request->get('search');
-            if ($search) {
-                $data = Keuangan::Where('keterangan', 'LIKE', "%$search%")
-                    ->orWhere('jenis', 'LIKE', "%$search%")
-                    ->orWhere('nominal', 'LIKE', "%$search%")
-                    ->orWhere('tanggal', 'LIKE', "%$search%")
-                    ->latest()
-                    ->paginate(15)
-                    ->withQueryString();
-                return view('pages.keuangan.index', compact('data', 'search', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
-            }
-
-            $data = Keuangan::latest()->paginate(15)->withQueryString();
-
-            return view('pages.keuangan.index', compact('data', 'type', 'total_masuk', 'total_keluar', 'total_keseluruhan'));
+            $query->where('type', 'masuk');
+        } elseif ($type == 'out') {
+            $query->where('type', 'keluar');
         }
+
+        // Filter berdasarkan pencarian
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('keterangan', 'LIKE', "%$search%")
+                    ->orWhere('jenis', 'LIKE', "%$search%")
+                    ->orWhere('nominal', 'LIKE', "%$search%")
+                    ->orWhere('tanggal', 'LIKE', "%$search%");
+            });
+        }
+
+        if ($choose_bulan) {
+            $query->whereRaw('MONTH(tanggal) = ?', [$choose_bulan]);
+        }
+
+        // Urutkan dan paginasi
+        $data = $query->latest()->paginate(15)->withQueryString();
+
+        // Kembalikan view dengan data yang sudah dikompilasi
+        return view('pages.keuangan.index', compact(
+            'data',
+            'search',
+            'type',
+            'total_masuk',
+            'total_keluar',
+            'total_keseluruhan',
+            'bulan',
+            'choose_bulan'
+        ));
     }
+
 
     public function create()
     {
