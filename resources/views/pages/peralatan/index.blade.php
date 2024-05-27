@@ -34,6 +34,31 @@
                     @endif
                 </form>
             </div>
+            <div class="d-lg-flex justify-content-lg-end mb-3 d-block">
+                <form action="{{ route('peralatan.index') }}" method="GET">
+                    <div class="input-group my-2">
+                        <select name="choose_bulan" id="choose_bulan" class="custom-select ">
+                            <option value="" {{ empty($choose_bulan) ? 'selected' : '' }}>Semua Bulan</option>
+                            @foreach ($bulan as $item)
+                                <option value="{{ $item->bulan }}"
+                                    {{ $choose_bulan == $item->bulan ? 'selected' : '' }}>{{ $item->nama_bulan }}</option>
+                            @endforeach
+                        </select>
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="submit" id="search_button">
+                                Filter
+                            </button>
+                        </div>
+                    </div>
+                    @if (!empty($month))
+                        <div class="text-end">
+                            <a href="{{ route('peralatan.index') }}" class="btn btn-sm btn-danger">
+                                Reset
+                            </a>
+                        </div>
+                    @endif
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered" cellspacing="0">
                     <thead>

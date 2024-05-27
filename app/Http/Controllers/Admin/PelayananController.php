@@ -23,7 +23,9 @@ class PelayananController extends Controller
         $bulan = Pelayanan::select(DB::raw('DISTINCT MONTHNAME(tanggal_pelayanan) AS nama_bulan, MONTH(tanggal_pelayanan) AS bulan'))->get();
 
         if ($search) {
-            $data = Pelayanan::with('user')->where('nama', 'LIKE', "%$search%")
+            $data = Pelayanan::with('user')->whereHas('user', function ($query) use ($search){
+                $query->where('nama_anak', 'like', "%$search%");
+            })
                 ->orWhere('jenis_imunisasi', 'LIKE', "%$search%")
                 ->orWhere('jenis_vitamin', 'LIKE', "%$search%")
                 ->when($auth == 'user', function ($query) {
@@ -82,6 +84,7 @@ class PelayananController extends Controller
             $pelayanan->jenis_vitamin = $request->jenis_vitamin;
             $pelayanan->lingkar_kepala = $request->lingkar_kepala;
             $pelayanan->tanggal_pelayanan = $request->tanggal_pelayanan;
+            $pelayanan->deskripsi = $request->deskripsi;
             $pelayanan->save();
             DB::commit();
             Alert::success('Success', 'Berhasil menambahkan data pelayanan!');
@@ -129,6 +132,7 @@ class PelayananController extends Controller
             $pelayanan->jenis_vitamin = $request->jenis_vitamin;
             $pelayanan->lingkar_kepala = $request->lingkar_kepala;
             $pelayanan->tanggal_pelayanan = $request->tanggal_pelayanan;
+            $pelayanan->deskripsi = $request->deskripsi;
             $pelayanan->save();
             DB::commit();
             Alert::success('Success', 'Berhasil mengubah data pelayanan!');

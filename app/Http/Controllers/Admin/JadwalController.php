@@ -15,19 +15,30 @@ class JadwalController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $choose_bulan = $request->get('choose_bulan');
+        $bulan = Jadwal::select(DB::raw('DISTINCT MONTHNAME(tanggal) AS nama_bulan, MONTH(tanggal) AS bulan'))->get();
+
         if ($search) {
-            $data = Jadwal::Where('jenis_pelayanan', 'LIKE', "%$search%")
+            $data = Jadwal::where('jenis_pelayanan', 'LIKE', "%$search%")
                 ->orWhere('lokasi', 'LIKE', "%$search%")
                 ->orWhere('tanggal', 'LIKE', "%$search%")
                 ->latest()
                 ->paginate(15)
                 ->withQueryString();
-            return view('pages.jadwal.index', compact('data', 'search'));
+            return view('pages.jadwal.index',  compact('data', 'search', 'bulan','choose_bulan'));
+        }
+
+        if ($choose_bulan) {
+            $data = Jadwal::whereRaw('MONTH(tanggal) = ?', [$choose_bulan])
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+            return view('pages.jadwal.index', compact('data', 'search', 'bulan','choose_bulan'));
         }
 
         $data = Jadwal::latest()->paginate(15)->withQueryString();
 
-        return view('pages.jadwal.index', compact('data'));
+        return view('pages.jadwal.index', compact('data', 'search', 'bulan','choose_bulan'));
     }
 
     public function create()

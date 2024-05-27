@@ -173,6 +173,10 @@
                         </span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label for="deskripsi">Deskripsi</label>
+                    <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5">{{ $pelayanan->deskripsi }}</textarea>
+                </div>
                 <div class="form-group col-12 text-center">
                     <a href="{{ route('pelayanan.index') }}" class="btn btn-danger">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>

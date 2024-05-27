@@ -15,18 +15,29 @@ class PeralatanController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
+        $choose_bulan = $request->get('choose_bulan');
+        $bulan = Peralatan::select(DB::raw('DISTINCT MONTHNAME(tgl_pembelian) AS nama_bulan, MONTH(tgl_pembelian) AS bulan'))->get();
+
         if ($search) {
             $data = Peralatan::Where('nama_peralatan', 'LIKE', "%$search%")
                 ->orWhere('status', 'LIKE', "%$search%")
                 ->latest()
                 ->paginate(15)
                 ->withQueryString();
-            return view('pages.peralatan.index', compact('data', 'search'));
+            return view('pages.peralatan.index',compact('data', 'search', 'bulan','choose_bulan'));
+        }
+
+        if ($choose_bulan) {
+            $data = Peralatan::whereRaw('MONTH(tgl_pembelian) = ?', [$choose_bulan])
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+            return view('pages.peralatan.index', compact('data', 'search', 'bulan','choose_bulan'));
         }
 
         $data = Peralatan::latest()->paginate(15)->withQueryString();
 
-        return view('pages.peralatan.index', compact('data'));
+        return view('pages.peralatan.index', compact('data', 'search', 'bulan','choose_bulan'));
     }
 
     public function create()

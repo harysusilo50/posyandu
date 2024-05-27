@@ -68,11 +68,7 @@
                             <th class="text-center">ID Bayi</th>
                             <th class="text-center">Nama</th>
                             <th class="text-center">Usia</th>
-                            <th class="text-center">Berat Badan</th>
-                            <th class="text-center">Tinggi Badan</th>
-                            <th class="text-center">Lingkar Kepala</th>
-                            <th class="text-center">Imunisasi</th>
-                            <th class="text-center">Vitamin</th>
+                            <th class="text-center">Detail Pelayanan</th>
                             @if (Auth::user()->role == 'admin')
                                 <th class="text-center">Aksi</th>
                             @endif
@@ -87,11 +83,13 @@
                                     {{ $item->format_tanggal_pelayanan }} WIB
                                 </td>
                                 <td>
-                                    <p class="text-center">{{ $item->user_id }}</p>
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                        data-target="#modal_id_{{ $item->id }}">
-                                        Detail <i class="fas fa-search-plus"></i>
-                                    </button>
+                                    <div class="text-center">
+                                        <p class="text-center">{{ $item->user_id }}</p>
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-target="#modal_id_{{ $item->id }}">
+                                            Detail <i class="fas fa-search-plus"></i>
+                                        </button>
+                                    </div>
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="modal_id_{{ $item->id }}" tabindex="-1" role="dialog"
@@ -207,19 +205,76 @@
                                     {{ $item->user->usia }} thn
                                 </td>
                                 <td>
-                                    {{ $item->berat_badan }} kg
-                                </td>
-                                <td>
-                                    {{ $item->tinggi_badan }} cm
-                                </td>
-                                <td>
-                                    {{ $item->lingkar_kepala }} cm
-                                </td>
-                                <td>
-                                    {{ $item->jenis_imunisasi }}
-                                </td>
-                                <td>
-                                    {{ $item->jenis_vitamin }}
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                            data-target="#deskripsi_{{ $item->id }}">
+                                            Lihat <i class="fas fa-search-plus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deskripsi_{{ $item->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Detail Bayi ID : {{ $item->user_id }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="container-fluid">
+                                                        <div class="form-group mb-1">
+                                                            <label class="col-form-label" for="berat_badan"
+                                                                style="font-weight: 500">Berat Badan</label>
+                                                            <input readonly id="berat_badan" type="text"
+                                                                class="form-control" name="berat_badan"
+                                                                value="{{ $item->berat_badan }} kg" required
+                                                                autocomplete="berat_badan" autofocus>
+                                                        </div>
+                                                        <div class="form-group mb-1">
+                                                            <label class="col-form-label" for="tinggi_badan"
+                                                                style="font-weight: 500">Tinggi Badan</label>
+                                                            <input readonly id="tinggi_badan" type="text"
+                                                                class="form-control" name="tinggi_badan"
+                                                                value="{{ $item->tinggi_badan }} cm" required
+                                                                autocomplete="tinggi_badan" autofocus>
+                                                        </div>
+                                                        <div class="form-group mb-1">
+                                                            <label class="col-form-label" for="lingkar_kepala"
+                                                                style="font-weight: 500">Lingkar Kepala</label>
+                                                            <input readonly id="lingkar_kepala" type="text"
+                                                                class="form-control" name="lingkar_kepala"
+                                                                value="{{ $item->lingkar_kepala }} cm" required
+                                                                autocomplete="lingkar_kepala" autofocus>
+                                                        </div>
+                                                        <div class="form-group mb-1">
+                                                            <label class="col-form-label" for="jenis_imunisasi"
+                                                                style="font-weight: 500">Jenis Imunisasi</label>
+                                                            <input readonly id="jenis_imunisasi" type="text"
+                                                                class="form-control" name="jenis_imunisasi"
+                                                                value="{{ $item->jenis_imunisasi }}" required
+                                                                autocomplete="jenis_imunisasi" autofocus>
+                                                        </div>
+                                                        <div class="form-group mb-1">
+                                                            <label class="col-form-label" for="jenis_vitamin"
+                                                                style="font-weight: 500">Jenis Vitamin</label>
+                                                            <input readonly id="jenis_vitamin" type="text"
+                                                                class="form-control" name="jenis_vitamin"
+                                                                value="{{ $item->jenis_vitamin }}" required
+                                                                autocomplete="jenis_vitamin" autofocus>
+                                                        </div>
+                                                        <div>
+                                                            <label class="col-form-label"   
+                                                            style="font-weight: 500">Deskripsi</label>
+                                                            <textarea class="form-control" cols="30" rows="10" readonly>{{ $item->deskripsi }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 @if (Auth::user()->role == 'admin')
                                     <td class="text-center" style="width: 10%">
