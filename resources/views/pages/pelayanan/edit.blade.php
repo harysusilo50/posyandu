@@ -120,7 +120,7 @@
                                     <i class="fas fa-plus-circle"></i> </button>
                             </div>
                             <select id="jenis_imunisasi" class="form-control @error('jenis_imunisasi') is-invalid @enderror"
-                                name="jenis_imunisasi" required>
+                                name="jenis_imunisasi">
                                 <option value="" selected>- Pilih Jenis Imunisasi -</option>
                                 @foreach ($jenis_imunisasi as $item)
                                     <option
@@ -145,7 +145,7 @@
                                     <i class="fas fa-plus-circle"></i> </button>
                             </div>
                             <select id="jenis_vitamin" class="form-control @error('jenis_vitamin') is-invalid @enderror"
-                                name="jenis_vitamin" required>
+                                name="jenis_vitamin">
                                 <option value="" selected>- Pilih Jenis Vitamin -</option>
                                 @foreach ($jenis_vitamin as $item)
                                     <option
