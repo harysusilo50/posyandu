@@ -14,6 +14,7 @@ class Anggota extends Model
 
     public function getFormatTglLahirAttribute()
     {
+        Carbon::setLocale('id');
         return Carbon::parse($this->attributes['tgl_lahir'])->isoFormat('D MMMM Y');
     }
 }
