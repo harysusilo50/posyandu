@@ -124,6 +124,7 @@ class UserController extends Controller
             }
             $user->alamat = $request->alamat;
             $user->no_hp = $request->no_hp;
+            $user->role = $request->role;
             $user->nik_ibu = $request->nik_ibu;
             $user->nik_anak = $request->nik_anak;
             $user->nama_ibu = $request->nama_ibu;

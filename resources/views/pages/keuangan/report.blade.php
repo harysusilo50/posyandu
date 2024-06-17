@@ -3,7 +3,7 @@
 
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Laporan Keuangan</title>
     <style type="text/css">
         table tr td,
@@ -15,25 +15,34 @@
 </head>
 
 <body>
-    <center><h3 class="text-center mb-4 fw-bold " style="font-weight: 700">Laporan Keuangan</h3></center>
+    @php
+        $type = $type??''
+    @endphp
+    <center>
+        <h3 class="text-center mb-4 fw-bold " style="font-weight: 700">Laporan Keuangan</h3>
+    </center>
 
     <table class='table' width="100%" style="table-layout:fixed;">
-        <tr class="m-0">
-            <td width="15%" style="border: 0">
-                <p class="m-0 fw-bold">Pemasukan</p>
-            </td>
-            <td style="border: 0">
-                <p class="m-0">: Rp{{ number_format($total_masuk, 0, ',', '.') }}</p>
-            </td>
-        </tr>
-        <tr class="m-0">
-            <td width="15%" style="border: 0">
-                <p class="m-0 fw-bold">Pengeluaran</p>
-            </td>
-            <td style="border: 0">
-                <p class="m-0 ">: Rp{{ number_format($total_keluar, 0, ',', '.') }}</p>
-            </td>
-        </tr>
+        @if ($type != 'out')
+            <tr class="m-0">
+                <td width="15%" style="border: 0">
+                    <p class="m-0 fw-bold">Pemasukan</p>
+                </td>
+                <td style="border: 0">
+                    <p class="m-0">: Rp{{ number_format($total_masuk, 0, ',', '.') }}</p>
+                </td>
+            </tr>
+        @endif
+        @if ($type != 'in')
+            <tr class="m-0">
+                <td width="15%" style="border: 0">
+                    <p class="m-0 fw-bold">Pengeluaran</p>
+                </td>
+                <td style="border: 0">
+                    <p class="m-0 ">: Rp{{ number_format($total_keluar, 0, ',', '.') }}</p>
+                </td>
+            </tr>
+        @endif
         <tr class="m-0">
             <td width="15%" style="border: 0">
                 <p class="m-0 fw-bold">Total Kas</p>

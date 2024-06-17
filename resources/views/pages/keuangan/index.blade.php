@@ -143,6 +143,7 @@
             </div>
             <div class="d-lg-flex justify-content-lg-end mb-3 d-block">
                 <form action="{{ route('keuangan.index') }}" method="GET">
+                    <input type="text" name="type" class="d-none" value="{{ $type??'' }}">
                     <div class="input-group my-2">
                         <select name="choose_bulan" id="choose_bulan" class="custom-select ">
                             <option value="" {{ empty($choose_bulan) ? 'selected' : '' }}>Semua Bulan</option>
@@ -253,7 +254,7 @@
                     </tbody>
                 </table>
                 <div class="my-2">
-                    <a href="{{ route('keuangan.report') }}" class="btn btn-danger btn-sm" target="_blank">Cetak
+                    <a href="{{ route('keuangan.report',['type'=>$type,'choose_bulan'=>$choose_bulan]) }}" class="btn btn-danger btn-sm" target="_blank">Cetak
                         <i class="fas fa-file-pdf"></i></a>
                 </div>
                 <div class="d-flex justify-content-center">

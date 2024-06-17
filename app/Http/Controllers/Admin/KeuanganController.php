@@ -138,15 +138,53 @@ class KeuanganController extends Controller
         }
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        $keuangan = Keuangan::all();
+        $choose_bulan = $request->get('choose_bulan');
+        $query = Keuangan::query();
 
-        $total_masuk = Keuangan::where('type', 'masuk')->sum('nominal');
-        $total_keluar = Keuangan::where('type', 'keluar')->sum('nominal');
-        $total_keseluruhan =  $total_masuk - $total_keluar;
+        if (!empty($choose_bulan)) {
+            $query->whereRaw('MONTH(tanggal) = ?', [$choose_bulan]);
+        }
 
-        $pdf = Pdf::loadview('pages.keuangan.report', ['keuangan' => $keuangan, 'total_masuk' => $total_masuk, 'total_keluar' => $total_keluar, 'total_keseluruhan' => $total_keseluruhan])->setPaper('a4', 'landscape');
+        if ($request->type == 'in') {
+            $query->where('type', 'masuk');
+            $total_masuk = $query->sum('nominal');
+            $total_keluar = 0;
+            $keuangan = $query->get();
+        } elseif ($request->type == 'out') {
+            $query->where('type', 'keluar');
+            $total_masuk = 0;
+            $total_keluar = $query->sum('nominal');
+            $keuangan = $query->get();
+        } else {
+            $query = Keuangan::query();
+            $query_tm = Keuangan::query();
+            $query_tk = Keuangan::query();
+            if (!empty($choose_bulan)) {
+                $query_tm->whereRaw('MONTH(tanggal) = ?', [$choose_bulan]);
+                $query_tm->whereRaw('MONTH(tanggal) = ?', [$choose_bulan]);
+                $query->whereRaw('MONTH(tanggal) = ?', [$choose_bulan]);
+            }
+            $total_masuk = $query_tm->where('type', 'masuk')->sum('nominal');
+            $total_keluar = $query_tk->where('type', 'keluar')->sum('nominal');
+            $total_keseluruhan = $total_masuk - $total_keluar;
+            
+            $keuangan = $query->get();
+        }
+
+
+
+        $total_keseluruhan = isset($total_keseluruhan) ? $total_keseluruhan : $total_masuk - $total_keluar;
+
+        $pdf = Pdf::loadview('pages.keuangan.report', [
+            'keuangan' => $keuangan,
+            'total_masuk' => $total_masuk,
+            'total_keluar' => $total_keluar,
+            'total_keseluruhan' => $total_keseluruhan,
+            'type' => $request->type
+        ])->setPaper('a4', 'landscape');
+
         return $pdf->stream('keuangan-report_' . now() . '.pdf');
     }
 }

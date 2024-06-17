@@ -68,8 +68,8 @@ class PelayananController extends Controller
             'user_id' => 'required',
             'tinggi_badan' => 'required',
             'berat_badan' => 'required',
-            'jenis_imunisasi' => 'required',
-            'jenis_vitamin' => 'required',
+            // 'jenis_imunisasi' => 'required',
+            // 'jenis_vitamin' => 'required',
             'lingkar_kepala' => 'required',
             'tanggal_pelayanan' => 'required',
         ]);
@@ -80,8 +80,8 @@ class PelayananController extends Controller
             $pelayanan->user_id = $request->user_id;
             $pelayanan->tinggi_badan = $request->tinggi_badan;
             $pelayanan->berat_badan = $request->berat_badan;
-            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi;
-            $pelayanan->jenis_vitamin = $request->jenis_vitamin;
+            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi??'';
+            $pelayanan->jenis_vitamin = $request->jenis_vitamin??'';
             $pelayanan->lingkar_kepala = $request->lingkar_kepala;
             $pelayanan->tanggal_pelayanan = $request->tanggal_pelayanan;
             $pelayanan->deskripsi = $request->deskripsi;
@@ -116,8 +116,8 @@ class PelayananController extends Controller
             'user_id' => 'required',
             'tinggi_badan' => 'required',
             'berat_badan' => 'required',
-            'jenis_imunisasi' => 'required',
-            'jenis_vitamin' => 'required',
+            // 'jenis_imunisasi' => 'required',
+            // 'jenis_vitamin' => 'required',
             'lingkar_kepala' => 'required',
             'tanggal_pelayanan' => 'required',
         ]);
@@ -128,8 +128,8 @@ class PelayananController extends Controller
             $pelayanan->user_id = $request->user_id;
             $pelayanan->tinggi_badan = $request->tinggi_badan;
             $pelayanan->berat_badan = $request->berat_badan;
-            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi;
-            $pelayanan->jenis_vitamin = $request->jenis_vitamin;
+            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi??'';
+            $pelayanan->jenis_vitamin = $request->jenis_vitamin??'';
             $pelayanan->lingkar_kepala = $request->lingkar_kepala;
             $pelayanan->tanggal_pelayanan = $request->tanggal_pelayanan;
             $pelayanan->deskripsi = $request->deskripsi;
