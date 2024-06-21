@@ -23,9 +23,10 @@
     <link href="{{ asset('compro/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('compro/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('compro/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet" />
-
     <!-- Template Main CSS File -->
     <link href="{{ asset('compro/assets/css/style.css') }}" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://unpkg.com/bs-brain@2.0.4/tutorials/timelines/timeline-8/assets/css/timeline-8.css">
 </head>
 
 <body>
@@ -82,7 +83,8 @@
                                 <i class="bi bi-arrow-right"></i>
                             </a>
                         </div>
-                   <p class="my-2">sudah memiliki akun? <u><a class="link-underline" href="{{ route('login') }}">Masuk disini </a></u></p>
+                        <p class="my-2">sudah memiliki akun? <u><a class="link-underline"
+                                    href="{{ route('login') }}">Masuk disini </a></u></p>
                     </div>
                 </div>
                 <div class="col-lg-6 hero-img text-end" data-aos="zoom-out" data-aos-delay="200">
@@ -173,26 +175,55 @@
         </section>
         <!-- End Values Section -->
 
+        <!-- ======= Jadwal Section ======= -->
+        <section id="contact" class="contact">
+            <div class="container " data-aos="fade-up">
+                <header class="section-header">
+                    <h2>Infromasi</h2>
+                    <p>Jadwal Pelayanan</p>
+                </header>
+                <div class="col-lg-12 bsb-timeline-8 py-5 py-xl-8 mx-auto">
+                    <div class="row gy-4 d-flex justify-content-center">
+                        <ul class="timeline">
+                            @foreach ($jadwal as $item)
+                                <li class="timeline-item">
+                                    <div class="timeline-body">
+                                        <div class="timeline-meta">
+                                            <span>{{ $item->format_tanggal }}</span>
+                                        </div>
+                                        <div class="timeline-content timeline-indicator">
+                                            <h6 class="mb-1">{{ $item->jenis_pelayanan }}</h6>
+                                            <span class="text-secondary fs-7">{{ $item->lokasi }}</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Contact Section -->
+
         <!-- ======= Contact Section ======= -->
         <section id="contact" class="contact">
-            <div class="container" data-aos="fade-up">
+            <div class="container " data-aos="fade-up">
                 <header class="section-header">
                     <h2>Kontak</h2>
                     <p>Hubungi Kami</p>
                 </header>
                 <div class="col-lg-12 mx-auto">
-                    <div class="row gy-4">
-                        <div class="col-md-6 col-lg-3">
+                    <div class="row gy-4 d-flex justify-content-center">
+                        <div class="col-md-6 col-lg-4">
                             <div class="info-box">
                                 <i class="bi bi-geo-alt"></i>
                                 <h3>Address</h3>
                                 <p>
-                                    {{-- A108 Adam Street,<br />New York, NY
-                                    535022 --}}
+                                    Jl. Flamboyan RT007/002, Kelurahan Kebon Jeruk, Kecamatan Kebon Jeruk, Jakarta Barat
                                 </p>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="info-box">
                                 <i class="bi bi-telephone"></i>
                                 <h3>Call Us</h3>
@@ -201,20 +232,13 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="info-box">
                                 <i class="bi bi-envelope"></i>
                                 <h3>Email Us</h3>
                                 <p>
                                     posyanduflamboyan@gmail.com
                                 </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="info-box">
-                                <i class="bi bi-clock"></i>
-                                <h3>Open Hours</h3>
-                                <p>Senin - Jumat<br />09.00 WIB - 17.00 WIB</p>
                             </div>
                         </div>
                     </div>

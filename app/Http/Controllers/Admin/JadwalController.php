@@ -22,23 +22,23 @@ class JadwalController extends Controller
             $data = Jadwal::where('jenis_pelayanan', 'LIKE', "%$search%")
                 ->orWhere('lokasi', 'LIKE', "%$search%")
                 ->orWhere('tanggal', 'LIKE', "%$search%")
-                ->latest()
+                ->oldest()
                 ->paginate(15)
                 ->withQueryString();
-            return view('pages.jadwal.index',  compact('data', 'search', 'bulan','choose_bulan'));
+            return view('pages.jadwal.index',  compact('data', 'search', 'bulan', 'choose_bulan'));
         }
 
         if ($choose_bulan) {
             $data = Jadwal::whereRaw('MONTH(tanggal) = ?', [$choose_bulan])
-            ->latest()
-            ->paginate(15)
-            ->withQueryString();
-            return view('pages.jadwal.index', compact('data', 'search', 'bulan','choose_bulan'));
+                ->oldest()
+                ->paginate(15)
+                ->withQueryString();
+            return view('pages.jadwal.index', compact('data', 'search', 'bulan', 'choose_bulan'));
         }
 
-        $data = Jadwal::latest()->paginate(15)->withQueryString();
+        $data = Jadwal::oldest()->paginate(15)->withQueryString();
 
-        return view('pages.jadwal.index', compact('data', 'search', 'bulan','choose_bulan'));
+        return view('pages.jadwal.index', compact('data', 'search', 'bulan', 'choose_bulan'));
     }
 
     public function create()

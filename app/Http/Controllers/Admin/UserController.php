@@ -28,7 +28,7 @@ class UserController extends Controller
                 ->when($auth == 'user', function ($query) {
                     $query->where('id', Auth::id());
                 })
-                ->latest()
+                ->oldest()
                 ->paginate(15)
                 ->withQueryString();
             return view('pages.user.index', compact('data', 'search'));
@@ -36,7 +36,7 @@ class UserController extends Controller
 
         $data = User::when($auth == 'user', function ($query) {
             $query->where('id', Auth::id());
-        })->latest()->paginate(15)->withQueryString();
+        })->oldest()->paginate(15)->withQueryString();
 
         return view('pages.user.index', compact('data'));
     }

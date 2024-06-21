@@ -40,8 +40,8 @@
                         <select name="choose_bulan" id="choose_bulan" class="custom-select ">
                             <option value="" {{ empty($choose_bulan) ? 'selected' : '' }}>Semua Bulan</option>
                             @foreach ($bulan as $item)
-                                <option value="{{ $item->bulan }}"
-                                    {{ $choose_bulan == $item->bulan ? 'selected' : '' }}>{{ $item->nama_bulan }}</option>
+                                <option value="{{ $item->bulan }}" {{ $choose_bulan == $item->bulan ? 'selected' : '' }}>
+                                    {{ $item->nama_bulan }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">
@@ -212,8 +212,8 @@
                                         </button>
                                     </div>
                                     <!-- Modal -->
-                                    <div class="modal fade" id="deskripsi_{{ $item->id }}" tabindex="-1" role="dialog"
-                                        aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div class="modal fade" id="deskripsi_{{ $item->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -254,21 +254,21 @@
                                                                 style="font-weight: 500">Jenis Imunisasi</label>
                                                             <input readonly id="jenis_imunisasi" type="text"
                                                                 class="form-control" name="jenis_imunisasi"
-                                                                value="{{ $item->jenis_imunisasi }}" required
-                                                                autocomplete="jenis_imunisasi" autofocus>
+                                                                value="{{ $item->jenis_imunisasi == '' ? '-' : $item->jenis_imunisasi }}"
+                                                                required autocomplete="jenis_imunisasi" autofocus>
                                                         </div>
                                                         <div class="form-group mb-1">
                                                             <label class="col-form-label" for="jenis_vitamin"
                                                                 style="font-weight: 500">Jenis Vitamin</label>
                                                             <input readonly id="jenis_vitamin" type="text"
                                                                 class="form-control" name="jenis_vitamin"
-                                                                value="{{ $item->jenis_vitamin }}" required
-                                                                autocomplete="jenis_vitamin" autofocus>
+                                                                value="{{ $item->jenis_vitamin == '' ? '-' : $item->jenis_vitamin }}"
+                                                                required autocomplete="jenis_vitamin" autofocus>
                                                         </div>
                                                         <div>
-                                                            <label class="col-form-label"   
-                                                            style="font-weight: 500">Deskripsi</label>
-                                                            <textarea class="form-control" cols="30" rows="10" readonly>{{ $item->deskripsi }}</textarea>
+                                                            <label class="col-form-label"
+                                                                style="font-weight: 500">Deskripsi</label>
+                                                            <textarea class="form-control" cols="30" rows="10" readonly>{{ $item->deskripsi == '' ? '-' : $item->deskripsi }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -52,7 +52,7 @@ class KeuanganController extends Controller
         }
 
         // Urutkan dan paginasi
-        $data = $query->latest()->paginate(15)->withQueryString();
+        $data = $query->oldest()->paginate(15)->withQueryString();
 
         // Kembalikan view dengan data yang sudah dikompilasi
         return view('pages.keuangan.index', compact(
@@ -169,7 +169,7 @@ class KeuanganController extends Controller
             $total_masuk = $query_tm->where('type', 'masuk')->sum('nominal');
             $total_keluar = $query_tk->where('type', 'keluar')->sum('nominal');
             $total_keseluruhan = $total_masuk - $total_keluar;
-            
+
             $keuangan = $query->get();
         }
 

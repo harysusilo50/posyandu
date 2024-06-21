@@ -1,10 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+@php
+    $type = $type ?? '';
+@endphp
 
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Laporan Keuangan</title>
+    <title>Laporan @switch($type)
+            @case('in')
+                Pemasukan
+            @break
+
+            @case('out')
+                Pengeluaran
+            @break
+
+            @default
+        @endswitch Keuangan</title>
     <style type="text/css">
         table tr td,
         table tr th {
@@ -15,11 +28,19 @@
 </head>
 
 <body>
-    @php
-        $type = $type??''
-    @endphp
     <center>
-        <h3 class="text-center mb-4 fw-bold " style="font-weight: 700">Laporan Keuangan</h3>
+        <h3 class="text-center mb-4 fw-bold " style="font-weight: 700">Laporan
+            @switch($type)
+                @case('in')
+                    Pemasukan
+                @break
+
+                @case('out')
+                    Pengeluaran
+                @break
+
+                @default
+            @endswitch Keuangan</h3>
     </center>
 
     <table class='table' width="100%" style="table-layout:fixed;">

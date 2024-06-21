@@ -21,23 +21,23 @@ class PeralatanController extends Controller
         if ($search) {
             $data = Peralatan::Where('nama_peralatan', 'LIKE', "%$search%")
                 ->orWhere('status', 'LIKE', "%$search%")
-                ->latest()
+                ->oldest()
                 ->paginate(15)
                 ->withQueryString();
-            return view('pages.peralatan.index',compact('data', 'search', 'bulan','choose_bulan'));
+            return view('pages.peralatan.index', compact('data', 'search', 'bulan', 'choose_bulan'));
         }
 
         if ($choose_bulan) {
             $data = Peralatan::whereRaw('MONTH(tgl_pembelian) = ?', [$choose_bulan])
-            ->latest()
-            ->paginate(15)
-            ->withQueryString();
-            return view('pages.peralatan.index', compact('data', 'search', 'bulan','choose_bulan'));
+                ->oldest()
+                ->paginate(15)
+                ->withQueryString();
+            return view('pages.peralatan.index', compact('data', 'search', 'bulan', 'choose_bulan'));
         }
 
-        $data = Peralatan::latest()->paginate(15)->withQueryString();
+        $data = Peralatan::oldest()->paginate(15)->withQueryString();
 
-        return view('pages.peralatan.index', compact('data', 'search', 'bulan','choose_bulan'));
+        return view('pages.peralatan.index', compact('data', 'search', 'bulan', 'choose_bulan'));
     }
 
     public function create()

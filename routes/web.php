@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\JadwalController;
 use App\Http\Controllers\Admin\PeralatanController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\PelayananController;
+use App\Models\Jadwal;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,14 +26,30 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/', function () {
-    return view('index');
+    // Menghitung tanggal awal dan akhir bulan ini
+    $startOfMonth = Carbon::now()->startOfMonth();
+    $endOfMonth = Carbon::now()->endOfMonth();
+
+    // Menghitung tanggal awal dan akhir bulan sebelumnya
+    $startOfLastMonth = Carbon::now()->subMonth()->startOfMonth();
+    $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth();
+
+    // Menghitung tanggal awal dan akhir bulan setelahnya
+    $startOfNextMonth = Carbon::now()->addMonth()->startOfMonth();
+    $endOfNextMonth = Carbon::now()->addMonth()->endOfMonth();
+    $jadwal = Jadwal::whereBetween('tanggal', [$startOfMonth, $endOfMonth])
+        ->orWhereBetween('tanggal', [$startOfLastMonth, $endOfLastMonth])
+        ->orWhereBetween('tanggal', [$startOfNextMonth, $endOfNextMonth])
+        ->get();
+
+    return view('index', compact('jadwal'));
 })->name('compro');
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::get('login-admin', [LoginController::class, 'showLoginFormAdmin'])->name('admin.login');
 Route::group(
     ['middleware' => 'auth'],
     function () {
-        Route::get('/dashboard', [HomeController::class,'index'])->name('home');
+        Route::get('/dashboard', [HomeController::class, 'index'])->name('home');
 
         // User
         Route::resource('user', UserController::class);

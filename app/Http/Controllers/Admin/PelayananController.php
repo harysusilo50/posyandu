@@ -23,7 +23,7 @@ class PelayananController extends Controller
         $bulan = Pelayanan::select(DB::raw('DISTINCT MONTHNAME(tanggal_pelayanan) AS nama_bulan, MONTH(tanggal_pelayanan) AS bulan'))->get();
 
         if ($search) {
-            $data = Pelayanan::with('user')->whereHas('user', function ($query) use ($search){
+            $data = Pelayanan::with('user')->whereHas('user', function ($query) use ($search) {
                 $query->where('nama_anak', 'like', "%$search%");
             })
                 ->orWhere('jenis_imunisasi', 'LIKE', "%$search%")
@@ -31,32 +31,32 @@ class PelayananController extends Controller
                 ->when($auth == 'user', function ($query) {
                     $query->where('user_id', Auth::id());
                 })
-                ->latest()
+                ->oldest()
                 ->paginate(15)
                 ->withQueryString();
-            return view('pages.pelayanan.index', compact('data', 'search', 'bulan','choose_bulan'));
+            return view('pages.pelayanan.index', compact('data', 'search', 'bulan', 'choose_bulan'));
         }
         if ($choose_bulan) {
             $data = Pelayanan::with('user')->whereRaw('MONTH(tanggal_pelayanan) = ?', [$choose_bulan])
                 ->when($auth == 'user', function ($query) {
                     $query->where('user_id', Auth::id());
                 })
-                ->latest()
+                ->oldest()
                 ->paginate()
                 ->withQueryString();
-            return view('pages.pelayanan.index', compact('data', 'search', 'bulan','choose_bulan'));
+            return view('pages.pelayanan.index', compact('data', 'search', 'bulan', 'choose_bulan'));
         }
 
         $data = Pelayanan::with('user')->when($auth == 'user', function ($query) {
             $query->where('user_id', Auth::id());
-        })->latest()->paginate(15)->withQueryString();
+        })->oldest()->paginate(15)->withQueryString();
 
-        return view('pages.pelayanan.index', compact('data', 'bulan','choose_bulan'));
+        return view('pages.pelayanan.index', compact('data', 'bulan', 'choose_bulan'));
     }
 
     public function create()
     {
-        $user = User::where('role','user')->get();
+        $user = User::where('role', 'user')->get();
         $jenis_imunisasi = JenisImunisasi::all();
         $jenis_vitamin = JenisVitamin::all();
         return view('pages.pelayanan.create', compact('jenis_imunisasi', 'jenis_vitamin', 'user'));
@@ -80,8 +80,8 @@ class PelayananController extends Controller
             $pelayanan->user_id = $request->user_id;
             $pelayanan->tinggi_badan = $request->tinggi_badan;
             $pelayanan->berat_badan = $request->berat_badan;
-            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi??'';
-            $pelayanan->jenis_vitamin = $request->jenis_vitamin??'';
+            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi ?? '';
+            $pelayanan->jenis_vitamin = $request->jenis_vitamin ?? '';
             $pelayanan->lingkar_kepala = $request->lingkar_kepala;
             $pelayanan->tanggal_pelayanan = $request->tanggal_pelayanan;
             $pelayanan->deskripsi = $request->deskripsi;
@@ -104,7 +104,7 @@ class PelayananController extends Controller
     public function edit($id)
     {
         $pelayanan = Pelayanan::findOrFail($id);
-        $user = User::where('role','user')->get();
+        $user = User::where('role', 'user')->get();
         $jenis_imunisasi = JenisImunisasi::all();
         $jenis_vitamin = JenisVitamin::all();
         return view('pages.pelayanan.edit', compact('jenis_imunisasi', 'jenis_vitamin', 'user', 'pelayanan'));
@@ -128,8 +128,8 @@ class PelayananController extends Controller
             $pelayanan->user_id = $request->user_id;
             $pelayanan->tinggi_badan = $request->tinggi_badan;
             $pelayanan->berat_badan = $request->berat_badan;
-            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi??'';
-            $pelayanan->jenis_vitamin = $request->jenis_vitamin??'';
+            $pelayanan->jenis_imunisasi = $request->jenis_imunisasi ?? '';
+            $pelayanan->jenis_vitamin = $request->jenis_vitamin ?? '';
             $pelayanan->lingkar_kepala = $request->lingkar_kepala;
             $pelayanan->tanggal_pelayanan = $request->tanggal_pelayanan;
             $pelayanan->deskripsi = $request->deskripsi;

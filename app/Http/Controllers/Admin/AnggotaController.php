@@ -20,13 +20,13 @@ class AnggotaController extends Controller
                 ->orWhere('jenis_kelamin', 'LIKE', "%$search%")
                 ->orWhere('alamat', 'LIKE', "%$search%")
                 ->orWhere('pekerjaan', 'LIKE', "%$search%")
-                ->latest()
+                ->oldest()
                 ->paginate(15)
                 ->withQueryString();
             return view('pages.anggota.index', compact('data', 'search'));
         }
 
-        $data = Anggota::latest()->paginate(15)->withQueryString();
+        $data = Anggota::oldest()->paginate(15)->withQueryString();
 
         return view('pages.anggota.index', compact('data'));
     }
