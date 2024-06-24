@@ -182,6 +182,8 @@
                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                         Settings
                     </a> --}}
+                    @if (Auth::user()->role == 'admin')
+                        
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#vitaminModal">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                         Kelola Jenis Vitamin
@@ -192,6 +194,7 @@
                         Kelola Jenis Imunisasi
                     </a>
                     <div class="dropdown-divider"></div>
+                    @endif
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
@@ -255,57 +258,57 @@
         </div>
     </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="imunisasiModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-white bg-secondary">
-                    <h5 class="modal-title">Jenis Imunisasi</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @php
-                        $data = App\Models\JenisImunisasi::all();
-                    @endphp
-                    <table class="table table-bordered" style="100%">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style="width: 10%">No</th>
-                                <th>Nama</th>
-                                <th class="text-center" style="width: 20%">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($data as $item)
-                            <tr>
-                                <td  class="text-center" scope="row">{{ $loop->iteration }}</td>
-                                <td>
-                                    <form action="{{ route('pelayanan.edit_jenis_imunisasi', $item->id) }}"
+    <!-- Modal -->
+    <div class="modal fade" id="imunisasiModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-white bg-secondary">
+                <h5 class="modal-title">Jenis Imunisasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @php
+                    $data = App\Models\JenisImunisasi::all();
+                @endphp
+                <table class="table table-bordered" style="100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 10%">No</th>
+                            <th>Nama</th>
+                            <th class="text-center" style="width: 20%">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                        <tr>
+                            <td  class="text-center" scope="row">{{ $loop->iteration }}</td>
+                            <td>
+                                <form action="{{ route('pelayanan.edit_jenis_imunisasi', $item->id) }}"
+                                    method="POST">
+                                    @csrf
+                                        <input type="text" class="form-control " name="add_jenis_imunisasi" id="add_jenis_imunisasi" value="{{ $item->nama }}">
+                                </form>
+                            </td>
+                            <td class="text-center" style="width: 10%">
+                                <div class="d-flex row justify-content-center">
+                                    <form action="{{ route('pelayanan.delete_jenis_imunisasi', $item->id) }}"
                                         method="POST">
                                         @csrf
-                                          <input type="text" class="form-control " name="add_jenis_imunisasi" id="add_jenis_imunisasi" value="{{ $item->nama }}">
+                                        <button type="submit" class="btn btn-danger btn-sm ">
+                                            <i class="fas fa-trash ms-2"></i>
+                                        </button>
                                     </form>
-                                </td>
-                                <td class="text-center" style="width: 10%">
-                                    <div class="d-flex row justify-content-center">
-                                        <form action="{{ route('pelayanan.delete_jenis_imunisasi', $item->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm ">
-                                                <i class="fas fa-trash ms-2"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
-                </div>
             </div>
         </div>
+    </div>
     </div>
