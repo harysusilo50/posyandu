@@ -181,12 +181,17 @@
                     <a class="dropdown-item" href="#">
                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                         Settings
-                    </a>
-                    <a class="dropdown-item" href="#">
+                    </a> --}}
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#vitaminModal">
                         <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Activity Log
+                        Kelola Jenis Vitamin
                     </a>
-                    <div class="dropdown-divider"></div> --}}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#imunisasiModal">
+                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Kelola Jenis Imunisasi
+                    </a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
@@ -196,3 +201,100 @@
 
         </ul>
     </nav>
+    <!-- Modal -->
+    <div class="modal fade" id="vitaminModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Jenis Vitamin</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @php
+                        $data = App\Models\JenisVitamin::all();
+                    @endphp
+                    <table class="table" style="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 10%">No</th>
+                                <th>Nama</th>
+                                <th class="text-center" style="width: 20%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $item)
+                            <tr>
+                                <td  class="text-center" scope="row">{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama }}</td>
+                                <td class="text-center" style="width: 10%">
+                                    <div class="d-flex row justify-content-center">
+                                        <form action="{{ route('pelayanan.delete_jenis_vitamin', $item->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm ">
+                                                <i class="fas fa-trash ms-2"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="imunisasiModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Jenis Imunisasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @php
+                        $data = App\Models\JenisImunisasi::all();
+                    @endphp
+                    <table class="table" style="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 10%">No</th>
+                                <th>Nama</th>
+                                <th class="text-center" style="width: 20%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $item)
+                            <tr>
+                                <td  class="text-center" scope="row">{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama }}</td>
+                                <td class="text-center" style="width: 10%">
+                                    <div class="d-flex row justify-content-center">
+                                        <form action="{{ route('pelayanan.delete_jenis_imunisasi', $item->id) }}"
+                                            method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm ">
+                                                <i class="fas fa-trash ms-2"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>

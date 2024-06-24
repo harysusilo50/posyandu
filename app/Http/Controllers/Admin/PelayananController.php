@@ -167,12 +167,44 @@ class PelayananController extends Controller
             'add_jenis_imunisasi' => 'required|string',
         ]);
         try {
-            $data = new JenisImunisasi();
-            $data->nama = $request->add_jenis_imunisasi;
-            $data->save();
+            JenisImunisasi::updateOrCreate(['nama'=>$request->add_jenis_imunisasi]);
             Alert::success('Success', 'Berhasil menambahkan data jenis imunisasi!');
             return redirect()->back();
         } catch (\Throwable $th) {
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function delete_jenis_imunisasi($id)
+    {
+        try {
+            DB::beginTransaction();
+            $JenisImunisasi = JenisImunisasi::findOrFail($id);
+            $JenisImunisasi->delete();
+
+            DB::commit();
+            Alert::success('Success', 'Jenis Imunisasi berhasil dihapus!');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function delete_jenis_vitamin($id)
+    {
+        try {
+            DB::beginTransaction();
+            $JenisVitamin = JenisVitamin::findOrFail($id);
+            $JenisVitamin->delete();
+
+            DB::commit();
+            Alert::success('Success', 'Jenis Vitamin berhasil dihapus!');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            DB::rollBack();
             Alert::error('Failed', $th->getMessage());
             return redirect()->back();
         }
