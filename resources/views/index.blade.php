@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Portal Website Posyandu Flamboyan</title>
+    <title>Website Posyandu Flamboyan</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -28,30 +28,31 @@
     <link rel="stylesheet"
         href="https://unpkg.com/bs-brain@2.0.4/tutorials/timelines/timeline-8/assets/css/timeline-8.css">
 </head>
-
 <body>
     @include('sweetalert::alert')
     <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top">
+    <header id="header" class="header fixed-top"  style="background-color: #263f67">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
             <a href="" class="logo d-flex align-items-center">
-                <img src="{{ asset('compro/assets/img/logo.png') }}" alt="logo" />
+                <div class="p-2 bg-white rounded-2 text-center">
+                    <img src="{{ asset('compro/assets/img/logo.png') }}" class="mx-auto" alt="logo" />
+                </div>
                 <!-- <span> Flamboyan</span> -->
             </a>
 
             <nav id="navbar" class="navbar">
                 <ul>
                     <li>
-                        <a class="nav-link scrollto active" href="#home">Home</a>
+                        <a class="nav-link scrollto active text-white" href="#home">Home</a>
                     </li>
                     <li>
-                        <a class="nav-link scrollto" href="#about">About</a>
+                        <a class="nav-link scrollto text-white" href="#about">About</a>
                     </li>
                     <li>
-                        <a class="nav-link scrollto" href="#contact">Contact</a>
+                        <a class="nav-link scrollto text-white" href="#contact">Contact</a>
                     </li>
                     <li>
-                        <a class="nav-link scrollto" href="#portfolio">Gallery</a>
+                        <a class="nav-link scrollto text-white" href="#portfolio">Gallery</a>
                     </li>
                     <li>
                         <a class="getstarted scrollto" href="{{ route('register') }}">Daftar</a>
@@ -65,15 +66,15 @@
     <!-- End Header -->
 
     <!-- ======= Home Section ======= -->
-    <section id="home" class="hero d-flex align-items-center">
-        <div class="container">
+    <section id="home" class="hero d-flex align-items-center" >
+        <div class="container" >
             <div class="row">
                 <div class="col-lg-6 d-flex flex-column justify-content-center">
                     <h2 data-aos="fade-up" data-aos-delay="400">
                         Selamat Datang Di
                     </h2>
                     <h1 data-aos="fade-up">
-                        Portal Website Posyandu Flamboyan
+                        Website Posyandu Flamboyan
                     </h1>
                     <div data-aos="fade-up" data-aos-delay="600">
                         <div class="text-center text-lg-start mb-3">
@@ -104,9 +105,9 @@
                         data-aos-delay="200">
                         <div class="content">
                             <h3>Sekilas Tentang</h3>
-                            <h2>Portal Website Posyandu Flamboyan</h2>
+                            <h2>Website Posyandu Flamboyan</h2>
                             <p>
-                                Portal website ini berisi tentang kegiatan
+                                Website ini berisi tentang kegiatan
                                 Posyandu Flamboyan yang menghasilkan data
                                 dan informasi tentang pelayanan terhadap
                                 proses tumbuh kembang anak dan pelayanan
@@ -127,7 +128,7 @@
         <!-- End About Section -->
 
         <!-- ======= Values Section ======= -->
-        <section id="values" class="values">
+        <section id="values" class="values" style="background-color: #d0ebff">
             <div class="container" data-aos="fade-up">
                 <header class="section-header">
                     <h2>Posyandu Flamboyan</h2>
@@ -135,8 +136,8 @@
                 </header>
 
                 <div class="row">
-                    <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="box">
+                    <div class="col-lg-4 " data-aos="fade-up" data-aos-delay="200">
+                        <div class="box bg-white shadow-lg">
                             <img src="{{ asset('compro/assets/img/values-1.png') }}" class="img-fluid"
                                 alt="" />
                             <h3>Sistem Online dan Praktis</h3>
@@ -148,7 +149,7 @@
                     </div>
 
                     <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="400">
-                        <div class="box">
+                        <div class="box bg-white shadow-lg">
                             <img src="{{ asset('compro/assets/img/values-2.png') }}" class="img-fluid"
                                 alt="" />
                             <h3>Pemeriksaan Bayi dan Balita</h3>
@@ -160,7 +161,7 @@
                     </div>
 
                     <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="600">
-                        <div class="box">
+                        <div class="box bg-white shadow-lg">
                             <img src="{{ asset('compro/assets/img/values-3.png') }}" class="img-fluid"
                                 alt="" />
                             <h3>Jadwal dan Pelayanan Posyandu</h3>
@@ -206,7 +207,7 @@
         <!-- End Contact Section -->
 
         <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
+        <section id="contact" class="contact"  style="background-color: #d0ebff">
             <div class="container " data-aos="fade-up">
                 <header class="section-header">
                     <h2>Kontak</h2>
@@ -255,9 +256,9 @@
                     <p>Dokumentasi Kegiatan Pelayanan</p>
                 </header>
                 <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
-                    @for ($i = 1; $i <= 6; $i++)
-                        <div class="col-lg-4 col-md-6 portfolio-item filter-app p-3">
-                            <div class="portfolio-wrap">
+                    @for ($i = 1; $i <= 9; $i++)
+                        <div class="col-lg-3 col-md-6 portfolio-item filter-app p-3">
+                            <div class="portfolio-wrap" style="height: 340px">
                                 <img src="{{ asset('compro/assets/img/portfolio/portofolio-' . $i . '.jpeg') }}"
                                     class="img-fluid" />
                                 <div class="portfolio-info">

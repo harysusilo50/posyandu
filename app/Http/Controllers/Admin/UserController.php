@@ -20,7 +20,7 @@ class UserController extends Controller
         if ($search) {
             $data = User::Where('username', 'LIKE', "%$search%")
                 ->orWhere('no_hp', 'LIKE', "%$search%")
-                ->orWhere('nik_ibu', 'LIKE', "%$search%")
+                // ->orWhere('nik_ibu', 'LIKE', "%$search%")
                 ->orWhere('nik_anak', 'LIKE', "%$search%")
                 ->orWhere('nama_anak', 'LIKE', "%$search%")
                 ->orWhere('nama_ibu', 'LIKE', "%$search%")
@@ -54,7 +54,7 @@ class UserController extends Controller
             'role' => 'required|string',
             'alamat' => 'required',
             'no_hp' => 'required|numeric',
-            'nik_ibu' => 'required|numeric',
+            // 'nik_ibu' => 'required|numeric',
             'nik_anak' => 'required|numeric',
             'nama_ibu' => 'required',
             'nama_anak' => 'required',
@@ -71,7 +71,7 @@ class UserController extends Controller
             $user->role = $request->role;
             $user->alamat = $request->alamat;
             $user->no_hp = $request->no_hp;
-            $user->nik_ibu = $request->nik_ibu;
+            // $user->nik_ibu = $request->nik_ibu;
             $user->nik_anak = $request->nik_anak;
             $user->nama_ibu = $request->nama_ibu;
             $user->nama_anak = $request->nama_anak;
@@ -106,7 +106,7 @@ class UserController extends Controller
             'username' => 'required|string',
             'alamat' => 'required',
             'no_hp' => 'required|numeric',
-            'nik_ibu' => 'required|numeric',
+            // 'nik_ibu' => 'required|numeric',
             'nik_anak' => 'required|numeric',
             'nama_ibu' => 'required',
             'nama_anak' => 'required',
@@ -125,7 +125,7 @@ class UserController extends Controller
             $user->alamat = $request->alamat;
             $user->no_hp = $request->no_hp;
             $user->role = $request->role;
-            $user->nik_ibu = $request->nik_ibu;
+            // $user->nik_ibu = $request->nik_ibu;
             $user->nik_anak = $request->nik_anak;
             $user->nama_ibu = $request->nama_ibu;
             $user->nama_anak = $request->nama_anak;

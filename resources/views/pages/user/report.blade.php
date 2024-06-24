@@ -26,7 +26,7 @@
                 <th class="text-center">Username</th>
                 <th class="text-center">Alamat</th>
                 <th class="text-center">No HP</th>
-                <th class="text-center">NIK Ibu</th>
+                {{-- <th class="text-center">NIK Ibu</th> --}}
                 <th class="text-center">Nama Ibu</th>
                 <th class="text-center">NIK Anak</th>
                 <th class="text-center">Nama Anak</th>
@@ -49,9 +49,9 @@
                     <td class="text-center">
                         {{ $item->no_hp }}
                     </td>
-                    <td class="text-center">
+                    {{-- <td class="text-center">
                         {{ $item->nik_ibu }}
-                    </td>
+                    </td> --}}
                     <td class="text-center">
                         {{ $item->nama_ibu }}
                     </td>

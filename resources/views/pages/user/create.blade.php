@@ -71,7 +71,7 @@
                         </span>
                     @enderror
                 </div>
-                <div class="form-group mb-1">
+                {{-- <div class="form-group mb-1">
                     <label class="col-form-label" for="nik_ibu" style="font-weight: 500">NIK Ibu</label>
                     <input id="nik_ibu" type="text" class="form-control @error('nik_ibu') is-invalid @enderror"
                         name="nik_ibu" value="{{ old('nik_ibu') }}" required autocomplete="nik_ibu" autofocus>
@@ -80,7 +80,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="form-group mb-1">
                     <label class="col-form-label" for="nik_anak" style="font-weight: 500">NIK Anak</label>
                     <input id="nik_anak" type="text" class="form-control @error('nik_anak') is-invalid @enderror"
