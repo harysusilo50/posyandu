@@ -167,7 +167,9 @@ class PelayananController extends Controller
             'add_jenis_imunisasi' => 'required|string',
         ]);
         try {
-            JenisImunisasi::updateOrCreate(['nama'=>$request->add_jenis_imunisasi]);
+            $data = new JenisImunisasi();
+            $data->nama = $request->add_jenis_imunisasi;
+            $data->save();
             Alert::success('Success', 'Berhasil menambahkan data jenis imunisasi!');
             return redirect()->back();
         } catch (\Throwable $th) {
@@ -220,6 +222,34 @@ class PelayananController extends Controller
             $data->nama = $request->add_jenis_vitamin;
             $data->save();
             Alert::success('Success', 'Berhasil menambahkan data jenis vitamin!');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function edit_jenis_imunisasi(Request $request, $id)
+    {
+        try {
+            $data = JenisImunisasi::findOrFail($id);
+            $data->nama = $request->add_jenis_imunisasi;
+            $data->save();
+            Alert::success('Success', 'Berhasil mengubah data jenis imunisasi!');
+            return redirect()->back();
+        } catch (\Throwable $th) {
+            Alert::error('Failed', $th->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function edit_jenis_vitamin(Request $request, $id)
+    {
+        try {
+            $data = JenisVitamin::findOrFail($id);
+            $data->nama = $request->add_jenis_vitamin;
+            $data->save();
+            Alert::success('Success', 'Berhasil mengubah data jenis vitamin!');
             return redirect()->back();
         } catch (\Throwable $th) {
             Alert::error('Failed', $th->getMessage());

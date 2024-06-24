@@ -206,7 +206,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-warning text-white">
                     <h5 class="modal-title">Jenis Vitamin</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -216,7 +216,7 @@
                     @php
                         $data = App\Models\JenisVitamin::all();
                     @endphp
-                    <table class="table" style="100%">
+                    <table class="table table-bordered " style="100%">
                         <thead>
                             <tr>
                                 <th class="text-center" style="width: 10%">No</th>
@@ -228,7 +228,12 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td  class="text-center" scope="row">{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
+                                <td> 
+                                    <form action="{{ route('pelayanan.edit_jenis_vitamin', $item->id) }}"
+                                    method="POST">
+                                    @csrf
+                                      <input type="text" class="form-control " name="add_jenis_vitamin" id="add_jenis_vitamin" value="{{ $item->nama }}">
+                                </form></td>
                                 <td class="text-center" style="width: 10%">
                                     <div class="d-flex row justify-content-center">
                                         <form action="{{ route('pelayanan.delete_jenis_vitamin', $item->id) }}"
@@ -255,7 +260,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header text-white bg-secondary">
                     <h5 class="modal-title">Jenis Imunisasi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -265,7 +270,7 @@
                     @php
                         $data = App\Models\JenisImunisasi::all();
                     @endphp
-                    <table class="table" style="100%">
+                    <table class="table table-bordered" style="100%">
                         <thead>
                             <tr>
                                 <th class="text-center" style="width: 10%">No</th>
@@ -277,7 +282,13 @@
                             @foreach ($data as $item)
                             <tr>
                                 <td  class="text-center" scope="row">{{ $loop->iteration }}</td>
-                                <td>{{ $item->nama }}</td>
+                                <td>
+                                    <form action="{{ route('pelayanan.edit_jenis_imunisasi', $item->id) }}"
+                                        method="POST">
+                                        @csrf
+                                          <input type="text" class="form-control " name="add_jenis_imunisasi" id="add_jenis_imunisasi" value="{{ $item->nama }}">
+                                    </form>
+                                </td>
                                 <td class="text-center" style="width: 10%">
                                     <div class="d-flex row justify-content-center">
                                         <form action="{{ route('pelayanan.delete_jenis_imunisasi', $item->id) }}"

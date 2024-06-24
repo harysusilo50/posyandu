@@ -73,6 +73,8 @@ Route::group(
         Route::get('report/pelayanan', [PelayananController::class, 'export_pdf'])->name('pelayanan.report');
         Route::post('add/jenis-imunisasi', [PelayananController::class, 'add_jenis_imunisasi'])->name('pelayanan.add_jenis_imunisasi');
         Route::post('add/jenis-vitamin', [PelayananController::class, 'add_jenis_vitamin'])->name('pelayanan.add_jenis_vitamin');
+        Route::post('edit/jenis-imunisasi/{id}', [PelayananController::class, 'edit_jenis_imunisasi'])->name('pelayanan.edit_jenis_imunisasi');
+        Route::post('edit/jenis-vitamin/{id}', [PelayananController::class, 'edit_jenis_vitamin'])->name('pelayanan.edit_jenis_vitamin');
         Route::post('delete/jenis-imunisasi/{id}', [PelayananController::class, 'delete_jenis_imunisasi'])->name('pelayanan.delete_jenis_imunisasi');
         Route::post('delete/jenis-vitamin/{id}', [PelayananController::class, 'delete_jenis_vitamin'])->name('pelayanan.delete_jenis_vitamin');
 
