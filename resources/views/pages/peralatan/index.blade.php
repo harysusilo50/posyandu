@@ -82,7 +82,7 @@
                                 <td>
                                     {{ $item->nama_peralatan }}
                                 </td>
-                                <td>{{ $item->jumlah . '/' . $item->satuan }}</td>
+                                <td>{{ $item->jumlah  }}</td>
                                 <td class="text-center" style="width: 10%">
                                     @switch($item->status)
                                         @case('bagus')
