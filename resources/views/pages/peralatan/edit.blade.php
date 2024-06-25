@@ -48,10 +48,10 @@
                         </span>
                     @enderror
                 </div>
-                <div class="form-group mb-1">
+                <div class="form-group mb-1 d-none">
                     <label class="col-form-label" for="satuan" style="font-weight: 500">Satuan</label>
                     <input id="satuan" type="text" class="form-control @error('satuan') is-invalid @enderror"
-                        name="satuan" value="{{ $peralatan->satuan }}" autocomplete="satuan" autofocus>
+                        name="satuan" value="-" autocomplete="satuan" autofocus>
                     @error('satuan')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
