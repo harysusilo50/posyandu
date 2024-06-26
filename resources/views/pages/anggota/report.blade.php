@@ -28,6 +28,7 @@
                 <th class="text-center">Alamat</th>
                 <th class="text-center">Pekerjaan</th>
                 <th class="text-center">Tgl Lahir</th>
+                <th class="text-center">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -61,6 +62,21 @@
                     </td>
                     <td class="text-center" style="width: 10%">
                         {{ $item->tgl_lahir }}
+                    </td>
+                    <td class="text-center" style="width: 10%">
+                        @switch($item->status)
+                            @case('aktif')
+                                <span class="badge badge-pill badge-primary">Aktif</span>
+                            @break
+
+                            @case('non_aktif')
+                                <span class="badge badge-pill badge-danger">Nonaktif</span>
+                            @break
+
+                            @default
+                                <span class="badge rounded-pill text-bg-secondary">{{ $item->status }}</span>
+                            @break
+                        @endswitch
                     </td>
                 </tr>
             @endforeach

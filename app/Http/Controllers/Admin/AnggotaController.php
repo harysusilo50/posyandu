@@ -44,6 +44,7 @@ class AnggotaController extends Controller
             'pekerjaan' => 'required',
             'tgl_lahir' => 'required',
             'jenis_kelamin' => 'required',
+            'status' => 'required',
         ]);
 
         try {
@@ -54,6 +55,7 @@ class AnggotaController extends Controller
             $anggota->tgl_lahir = $request->tgl_lahir;
             $anggota->pekerjaan = $request->pekerjaan;
             $anggota->jenis_kelamin = $request->jenis_kelamin;
+            $anggota->status = $request->status;
             $anggota->save();
             DB::commit();
             Alert::success('Success', 'Berhasil menambahkan data anggota!');
@@ -85,6 +87,7 @@ class AnggotaController extends Controller
             'tgl_lahir' => 'required',
             'pekerjaan' => 'required',
             'jenis_kelamin' => 'required',
+            'status' => 'required',
         ]);
 
         try {
@@ -96,6 +99,7 @@ class AnggotaController extends Controller
             $anggota->tgl_lahir = $request->tgl_lahir;
             $anggota->pekerjaan = $request->pekerjaan;
             $anggota->jenis_kelamin = $request->jenis_kelamin;
+            $anggota->status = $request->status;
             $anggota->save();
             DB::commit();
             Alert::success('Success', 'Berhasil mengedit data anggota!');

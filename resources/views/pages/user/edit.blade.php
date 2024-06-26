@@ -148,14 +148,14 @@
                         <label class="col-form-label" for="role" style="font-weight: 500">Role</label>
                         <select id="role" class="form-control @error('role') is-invalid @enderror" name="role"
                             required>
-                            <option value="admin"{{ $user->role = 'admin' ? ' selected' : '' }}>
+                            <option value="admin"{{ $user->role == 'admin' ? ' selected' : '' }}>
                                 Admin</option>
-                            <option value="user"{{ $user->role = 'user' ? ' selected' : '' }}>
+                            <option value="user"{{ $user->role == 'user' ? ' selected' : '' }}>
                                 User</option>
-                                <option value="ketua_rt"{{$user->role == 'ketua_rt' ? ' selected' : '' }}>
-                                    Ketua RT</option>
-                                <option value="bendahara"{{$user->role == 'bendahara' ? ' selected' : '' }}>
-                                    Bendahara</option>
+                            <option value="ketua_rt"{{ $user->role == 'ketua_rt' ? ' selected' : '' }}>
+                                Ketua RT</option>
+                            <option value="bendahara"{{ $user->role == 'bendahara' ? ' selected' : '' }}>
+                                Bendahara</option>
                         </select>
                         @error('role')
                             <span class="invalid-feedback" role="alert">
@@ -163,6 +163,8 @@
                             </span>
                         @enderror
                     </div>
+                @else
+                    <input type="text" name="role" class="d-none" value="{{ $user->role }}">
                 @endif
                 <div class="form-group col-12 text-center">
                     <a href="{{ route('user.index') }}" class="btn btn-danger">Batal</a>

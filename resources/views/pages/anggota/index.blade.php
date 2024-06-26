@@ -44,6 +44,7 @@
                             <th class="text-center">Alamat</th>
                             <th class="text-center">Pekerjaan</th>
                             <th class="text-center">Tgl Lahir</th>
+                            <th class="text-center">Status Keanggotaan</th>
                             @if (Auth::user()->role == 'admin')
                                 <th class="text-center">Aksi</th>
                             @endif
@@ -83,7 +84,23 @@
                                 <td class="text-center">
                                     {{ $item->format_tgl_lahir }}
                                 </td>
+                                <td class="text-center" style="width: 10%">
+                                    @switch($item->status)
+                                        @case('aktif')
+                                            <span class="badge badge-pill badge-primary">Aktif
+                                                <i class="fa fa-mars"></i></span>
+                                        @break
 
+                                        @case('non_aktif')
+                                            <span class="badge badge-pill badge-danger">Non Aktif
+                                                <i class="fa fa-venus" aria-hidden="true"></i></span>
+                                        @break
+
+                                        @default
+                                            <span class="badge rounded-pill text-bg-secondary">{{ $item->status }}</span>
+                                        @break
+                                    @endswitch
+                                </td>
                                 {{-- <td class="text-center" style="width: 10%">
                                     @switch($item->role)
                                         @case('superadmin')

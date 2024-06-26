@@ -129,7 +129,8 @@
                                         @if (Auth::user()->role == 'admin')
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-danger btn-sm col-8 m-1"
-                                                data-toggle="modal" data-target="#model_delete{{ $item->id }}">
+                                                data-toggle="modal" data-target="#model_delete{{ $item->id }}"
+                                                {{ Auth::id() == $item->id ? 'disabled' : '' }}>
                                                 Delete <i class="bi bi-trash3-fill ms-2"></i>
                                             </button>
                                         @endif

@@ -84,6 +84,21 @@
                         </span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="status" style="font-weight: 500">Status Keanggotaan</label>
+                    <select id="status" class="form-control @error('status') is-invalid @enderror" name="status"
+                        required>
+                        <option value="aktif"{{ $anggota->status == 'aktif' ? ' selected' : '' }}>
+                            Aktif</option>
+                        <option value="non_aktif"{{ $anggota->status == 'non_aktif' ? ' selected' : '' }}>
+                            Non Aktif</option>
+                    </select>
+                    @error('status')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
                 <div class="form-group col-12 text-center">
                     <a href="{{ route('anggota.index') }}" class="btn btn-danger">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
