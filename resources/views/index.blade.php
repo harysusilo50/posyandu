@@ -28,10 +28,11 @@
     <link rel="stylesheet"
         href="https://unpkg.com/bs-brain@2.0.4/tutorials/timelines/timeline-8/assets/css/timeline-8.css">
 </head>
+
 <body>
     @include('sweetalert::alert')
     <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top"  style="background-color: #263f67">
+    <header id="header" class="header fixed-top" style="background-color: #263f67">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
             <a href="" class="logo d-flex align-items-center">
                 <div class="p-2 bg-white rounded-2 text-center">
@@ -43,16 +44,22 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li>
-                        <a class="nav-link scrollto active text-white" href="#home">Home</a>
+                        <a class="nav-link scrollto active text-white" href="#home">Beranda</a>
                     </li>
                     <li>
-                        <a class="nav-link scrollto text-white" href="#about">About</a>
+                        <a class="nav-link scrollto text-white" href="#about">Tentang Kami</a>
                     </li>
                     <li>
-                        <a class="nav-link scrollto text-white" href="#contact">Contact</a>
+                        <a class="nav-link scrollto text-white" href="#values">Layanan</a>
                     </li>
                     <li>
-                        <a class="nav-link scrollto text-white" href="#portfolio">Gallery</a>
+                        <a class="nav-link scrollto text-white" href="#schedule">Jadwal</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto text-white" href="#contact">Kontak</a>
+                    </li>
+                    <li>
+                        <a class="nav-link scrollto text-white" href="#portfolio">Dokumentasi</a>
                     </li>
                     <li>
                         <a class="getstarted scrollto" href="{{ route('register') }}">Daftar</a>
@@ -66,8 +73,8 @@
     <!-- End Header -->
 
     <!-- ======= Home Section ======= -->
-    <section id="home" class="hero d-flex align-items-center" >
-        <div class="container" >
+    <section id="home" class="hero d-flex align-items-center">
+        <div class="container">
             <div class="row">
                 <div class="col-lg-6 d-flex flex-column justify-content-center">
                     <h2 data-aos="fade-up" data-aos-delay="400">
@@ -177,7 +184,7 @@
         <!-- End Values Section -->
 
         <!-- ======= Jadwal Section ======= -->
-        <section id="contact" class="contact">
+        <section id="schedule" class="contact">
             <div class="container " data-aos="fade-up">
                 <header class="section-header">
                     <h2>Infromasi</h2>
@@ -207,7 +214,7 @@
         <!-- End Contact Section -->
 
         <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact"  style="background-color: #d0ebff">
+        <section id="contact" class="contact" style="background-color: #d0ebff">
             <div class="container " data-aos="fade-up">
                 <header class="section-header">
                     <h2>Kontak</h2>
