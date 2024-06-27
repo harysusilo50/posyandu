@@ -173,7 +173,7 @@
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Tipe</th>
-                            @if ($item->type == 'masuk')
+                            @if ($type == 'in')
                                 <th class="text-center">Diinput Oleh</th>
                             @endif
                             <th class="text-center">Jenis</th>
@@ -205,7 +205,7 @@
                                         @break
                                     @endswitch
                                 </td>
-                                @if ($item->type == 'masuk')
+                                @if ($type == 'in')
                                     <td>{{ $item->nama_penginput }}</td>
                                 @endif
                                 <td>{{ $item->jenis }}</td>
