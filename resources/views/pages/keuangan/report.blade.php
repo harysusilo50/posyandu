@@ -81,7 +81,7 @@
                 <th>Tanggal</th>
                 <th>Tipe</th>
                 </td>
-                @if ($item->type != 'keluar')
+                @if ($type == 'in')
                     <th>Diinput Oleh</th>
                 @endif
                 <th>Jenis</th>
@@ -104,7 +104,7 @@
                             KELUAR
                         @endif
                     </td>
-                    @if ($item->type != 'keluar')
+                    @if ($type == 'in')
                         <td class="text-center">
                             {{ $item->nama_penginput }}
                         </td>
