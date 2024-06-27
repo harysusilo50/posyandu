@@ -143,13 +143,13 @@
             </div>
             <div class="d-lg-flex justify-content-lg-end mb-3 d-block">
                 <form action="{{ route('keuangan.index') }}" method="GET">
-                    <input type="text" name="type" class="d-none" value="{{ $type??'' }}">
+                    <input type="text" name="type" class="d-none" value="{{ $type ?? '' }}">
                     <div class="input-group my-2">
                         <select name="choose_bulan" id="choose_bulan" class="custom-select ">
                             <option value="" {{ empty($choose_bulan) ? 'selected' : '' }}>Semua Bulan</option>
                             @foreach ($bulan as $item)
-                                <option value="{{ $item->bulan }}"
-                                    {{ $choose_bulan == $item->bulan ? 'selected' : '' }}>{{ $item->nama_bulan }}</option>
+                                <option value="{{ $item->bulan }}" {{ $choose_bulan == $item->bulan ? 'selected' : '' }}>
+                                    {{ $item->nama_bulan }}</option>
                             @endforeach
                         </select>
                         <div class="input-group-append">
@@ -173,6 +173,9 @@
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Tipe</th>
+                            @if ($item->type == 'masuk')
+                                <th class="text-center">Diinput Oleh</th>
+                            @endif
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Nominal</th>
                             <th class="text-center">Tanggal</th>
@@ -202,6 +205,9 @@
                                         @break
                                     @endswitch
                                 </td>
+                                @if ($item->type == 'masuk')
+                                    <td>{{ $item->nama_penginput }}</td>
+                                @endif
                                 <td>{{ $item->jenis }}</td>
                                 <td>Rp {{ $item->format_nominal }}</td>
                                 <td>{{ $item->format_tanggal }}</td>
@@ -254,7 +260,8 @@
                     </tbody>
                 </table>
                 <div class="my-2">
-                    <a href="{{ route('keuangan.report',['type'=>$type,'choose_bulan'=>$choose_bulan]) }}" class="btn btn-danger btn-sm" target="_blank">Cetak
+                    <a href="{{ route('keuangan.report', ['type' => $type, 'choose_bulan' => $choose_bulan]) }}"
+                        class="btn btn-danger btn-sm" target="_blank">Cetak
                         <i class="fas fa-file-pdf"></i></a>
                 </div>
                 <div class="d-flex justify-content-center">
