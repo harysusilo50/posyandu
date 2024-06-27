@@ -80,6 +80,10 @@
                 <th>No</th>
                 <th>Tanggal</th>
                 <th>Tipe</th>
+                </td>
+                @if ($item->type != 'keluar')
+                    <th>Diinput Oleh</th>
+                @endif
                 <th>Jenis</th>
                 <th>Jumlah</th>
                 <th>Keterangan</th>
@@ -100,6 +104,11 @@
                             KELUAR
                         @endif
                     </td>
+                    @if ($item->type != 'keluar')
+                        <td class="text-center">
+                            {{ $item->nama_penginput }}
+                        </td>
+                    @endif
                     <td class="text-center">
                         {{ $item->jenis }}
                     </td>

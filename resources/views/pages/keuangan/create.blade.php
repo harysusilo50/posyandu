@@ -26,14 +26,24 @@
                 @csrf
                 <div class="form-group">
                     <label class="col-form-label" for="type" style="font-weight: 500">Tipe Transaksi</label>
-                    <select id="type" class="form-control @error('type') is-invalid @enderror"
-                        name="type" required>
+                    <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
                         <option value="masuk"{{ old('type') == 'masuk' ? ' selected' : '' }}>
                             Masuk</option>
                         <option value="keluar"{{ old('type') == 'keluar' ? ' selected' : '' }}>
                             Keluar</option>
                     </select>
                     @error('type')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+                <div class="form-group mb-1">
+                    <label class="col-form-label" for="nama_penginput" style="font-weight: 500">Diinput Oleh</label>
+                    <input id="nama_penginput" type="text"
+                        class="form-control @error('nama_penginput') is-invalid @enderror" name="nama_penginput"
+                        value="" required autocomplete="nama_penginput" autofocus>
+                    @error('nama_penginput')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -51,8 +61,9 @@
                 </div>
                 <div class="form-group mb-1">
                     <label class="col-form-label" for="nominal" style="font-weight: 500">Nominal Transaksi</label>
-                    <input id="nominal" type="number" min="0" class="form-control @error('nominal') is-invalid @enderror"
-                        name="nominal" value="{{ old('nominal') }}" required autocomplete="nominal" autofocus>
+                    <input id="nominal" type="number" min="0"
+                        class="form-control @error('nominal') is-invalid @enderror" name="nominal"
+                        value="{{ old('nominal') }}" required autocomplete="nominal" autofocus>
                     @error('nominal')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

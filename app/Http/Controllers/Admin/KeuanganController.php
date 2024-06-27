@@ -83,6 +83,7 @@ class KeuanganController extends Controller
             $keuangan->nominal = $request->nominal;
             $keuangan->tanggal = $request->tanggal;
             $keuangan->keterangan = $request->keterangan ?? '';
+            $keuangan->nama_penginput = $request->nama_penginput ?? '';
             $keuangan->save();
             DB::commit();
             Alert::success('Success', 'Berhasil menambahkan data keuangan!');
@@ -110,6 +111,7 @@ class KeuanganController extends Controller
             $keuangan->nominal = $request->nominal;
             $keuangan->tanggal = $request->tanggal;
             $keuangan->keterangan = $request->keterangan ?? '';
+            $keuangan->nama_penginput = $request->nama_penginput ?? '';
             $keuangan->save();
             DB::commit();
             Alert::success('Success', 'Berhasil mengubah data keuangan!');
