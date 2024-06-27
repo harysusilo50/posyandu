@@ -85,7 +85,7 @@
                     <textarea class="form-control" id="keterangan" name="keterangan" rows="5"></textarea>
                 </div>
                 <div class="form-group col-12 text-center">
-                    <a href="{{ route('anggota.index') }}" class="btn btn-danger">Batal</a>
+                    <a href="{{ route('keuangan.index') }}" class="btn btn-danger">Batal</a>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
