@@ -39,7 +39,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-1">
-                    <label class="col-form-label" for="nama_penginput" style="font-weight: 500">Diinput Oleh</label>
+                    <label class="col-form-label" for="nama_penginput" style="font-weight: 500">Nama</label>
                     <input id="nama_penginput" type="text"
                         class="form-control @error('nama_penginput') is-invalid @enderror" name="nama_penginput"
                         value="" required autocomplete="nama_penginput" autofocus>

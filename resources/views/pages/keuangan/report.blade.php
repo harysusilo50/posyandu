@@ -82,7 +82,7 @@
                 <th>Tipe</th>
                 </td>
                 @if ($type == 'in')
-                    <th>Diinput Oleh</th>
+                    <th>Nama</th>
                 @endif
                 <th>Jenis</th>
                 <th>Jumlah</th>
