@@ -173,9 +173,9 @@
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Tipe</th>
-                            @if ($type != 'out')
+                            {{-- @if ($type != 'out') --}}
                                 <th class="text-center">Nama</th>
-                            @endif
+                            {{-- @endif --}}
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Nominal</th>
                             <th class="text-center">Tanggal</th>
@@ -205,9 +205,9 @@
                                         @break
                                     @endswitch
                                 </td>
-                                @if ($type != 'out')
+                                {{-- @if ($type != 'out') --}}
                                     <td>{{ $item->nama_penginput }}</td>
-                                @endif
+                                {{-- @endif --}}
                                 <td>{{ $item->jenis }}</td>
                                 <td>Rp {{ $item->format_nominal }}</td>
                                 <td>{{ $item->format_tanggal }}</td>
