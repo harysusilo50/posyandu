@@ -174,7 +174,7 @@
                             <th class="text-center">No.</th>
                             <th class="text-center">Tipe</th>
                             @if ($type == 'in')
-                                <th class="text-center">Diinput Oleh</th>
+                                <th class="text-center">Nama</th>
                             @endif
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Nominal</th>
