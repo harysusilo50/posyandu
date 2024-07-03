@@ -173,7 +173,7 @@
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Tipe</th>
-                            @if ($type == 'in')
+                            @if ($type != 'out')
                                 <th class="text-center">Nama</th>
                             @endif
                             <th class="text-center">Jenis</th>
@@ -205,7 +205,7 @@
                                         @break
                                     @endswitch
                                 </td>
-                                @if ($type == 'in')
+                                @if ($type != 'out')
                                     <td>{{ $item->nama_penginput }}</td>
                                 @endif
                                 <td>{{ $item->jenis }}</td>
