@@ -68,9 +68,10 @@ class KeuanganController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('pages.keuangan.create');
+        $type = $request->type ?? '';
+        return view('pages.keuangan.create', compact('type'));
     }
 
     public function store(Request $request)
@@ -95,10 +96,11 @@ class KeuanganController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $type = $request->type ?? '';
         $keuangan = Keuangan::findOrFail($id);
-        return view('pages.keuangan.edit', compact('keuangan'));
+        return view('pages.keuangan.edit', compact('keuangan', 'type'));
     }
 
     public function update(Request $request, $id)

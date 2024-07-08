@@ -116,10 +116,12 @@
             <div class="d-lg-flex justify-content-lg-between mb-3 d-block">
                 <div class="my-2">
                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara')
-                        <a href="{{ route('keuangan.create') }}" class="btn btn-primary btn-sm">
-                            New
-                            <i class="fas fa-plus-circle"></i>
-                        </a>
+                        @if ($type != '')
+                            <a href="{{ route('keuangan.create', ['type' => $type]) }}" class="btn btn-primary btn-sm">
+                                New
+                                <i class="fas fa-plus-circle"></i>
+                            </a>
+                        @endif
                     @endif
                 </div>
                 <form action="" method="GET">
@@ -173,9 +175,9 @@
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Tipe</th>
-                            {{-- @if ($type != 'out') --}}
+                            @if ($type != 'out')
                                 <th class="text-center">Nama</th>
-                            {{-- @endif --}}
+                            @endif
                             <th class="text-center">Jenis</th>
                             <th class="text-center">Nominal</th>
                             <th class="text-center">Tanggal</th>
@@ -205,9 +207,9 @@
                                         @break
                                     @endswitch
                                 </td>
-                                {{-- @if ($type != 'out') --}}
+                                @if ($type != 'out')
                                     <td>{{ $item->nama_penginput }}</td>
-                                {{-- @endif --}}
+                                @endif
                                 <td>{{ $item->jenis }}</td>
                                 <td>Rp {{ $item->format_nominal }}</td>
                                 <td>{{ $item->format_tanggal }}</td>
@@ -215,10 +217,13 @@
                                 @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara')
                                     <td class="text-center" style="width: 10%">
                                         <div class="d-flex row justify-content-center">
-                                            <a class="btn btn-success btn-sm col-8 m-1"
-                                                href="{{ route('keuangan.edit', $item->id) }}">
-                                                Edit <i class="bi bi-pencil ms-2"></i>
-                                            </a>
+                                            <form action="{{ route('keuangan.edit', $item->id) }}" class="col-8 m-1">
+                                                <input type="text" name="type" value="{{ $type }}"
+                                                    class="d-none">
+                                                <button class="btn btn-success btn-sm">
+                                                    Edit <i class="bi bi-pencil ms-2"></i>
+                                                </button>
+                                            </form>
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-danger btn-sm col-8 m-1"
                                                 data-toggle="modal" data-target="#model_delete{{ $item->id }}">

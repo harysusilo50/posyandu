@@ -81,9 +81,9 @@
                 <th>Tanggal</th>
                 <th>Tipe</th>
                 </td>
-                {{-- @if ($type != 'out') --}}
+                @if ($type != 'out')
                     <th>Nama</th>
-                {{-- @endif --}}
+                @endif
                 <th>Jenis</th>
                 <th>Jumlah</th>
                 <th>Keterangan</th>
@@ -104,11 +104,11 @@
                             KELUAR
                         @endif
                     </td>
-                    {{-- @if ($type != 'out') --}}
+                    @if ($type != 'out')
                         <td class="text-center">
                             {{ $item->nama_penginput }}
                         </td>
-                    {{-- @endif --}}
+                    @endif
                     <td class="text-center">
                         {{ $item->jenis }}
                     </td>

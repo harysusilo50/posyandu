@@ -28,9 +28,9 @@
                 <div class="form-group">
                     <label class="col-form-label" for="type" style="font-weight: 500">Tipe Transaksi</label>
                     <select id="type" class="form-control @error('type') is-invalid @enderror" name="type" required>
-                        <option value="masuk"{{ $keuangan->type == 'masuk' ? ' selected' : '' }}>
+                        <option value="masuk"{{ $keuangan->type == 'masuk' ? ' selected' : 'disabled' }}>
                             Masuk</option>
-                        <option value="keluar"{{ $keuangan->type == 'keluar' ? ' selected' : '' }}>
+                        <option value="keluar"{{ $keuangan->type == 'keluar' ? ' selected' : 'disabled' }}>
                             Keluar</option>
                     </select>
                     @error('type')
@@ -39,17 +39,19 @@
                         </span>
                     @enderror
                 </div>
-                <div class="form-group mb-1">
-                    <label class="col-form-label" for="nama_penginput" style="font-weight: 500">Nama</label>
-                    <input id="nama_penginput" type="text"
-                        class="form-control @error('nama_penginput') is-invalid @enderror" name="nama_penginput"
-                        value="{{ $keuangan->nama_penginput }}" required autocomplete="nama_penginput" autofocus>
-                    @error('nama_penginput')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
+                @if ($type == 'in')
+                    <div class="form-group mb-1">
+                        <label class="col-form-label" for="nama_penginput" style="font-weight: 500">Nama</label>
+                        <input id="nama_penginput" type="text"
+                            class="form-control @error('nama_penginput') is-invalid @enderror" name="nama_penginput"
+                            value="{{ $keuangan->nama_penginput }}" required autocomplete="nama_penginput" autofocus>
+                        @error('nama_penginput')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                @endif
                 <div class="form-group mb-1">
                     <label class="col-form-label" for="jenis" style="font-weight: 500">Jenis Transaksi</label>
                     <input id="jenis" type="text" class="form-control @error('jenis') is-invalid @enderror"
