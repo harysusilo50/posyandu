@@ -92,7 +92,7 @@
             </div>
         </div>
     @endif
-    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara')
+    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'bendahara' || Auth::user()->role == 'ketua_rt')
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card border-left-secondary shadow h-100 py-2">

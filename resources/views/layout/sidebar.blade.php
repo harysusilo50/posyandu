@@ -27,7 +27,7 @@
             <a class="nav-link" href="{{ route('user.index') }}">
                 <i class="fas fa-fw fa-user-alt"></i>
                 @if (Auth::user()->role == 'user' || Auth::user()->role == 'ketua_rt')
-                <span>Profile {{ Auth::user()->username }}</span>
+                    <span>Profile {{ Auth::user()->username }}</span>
                 @else
                     <span>Data Semua User</span>
                 @endif
@@ -60,7 +60,7 @@
                 <span>Data Pelayanan</span></a>
         </li>
     @endif
-    @if (Auth::user()->role == 'bendahara' || Auth::user()->role == 'admin')
+    @if (Auth::user()->role == 'bendahara' || Auth::user()->role == 'admin' || Auth::user()->role == 'ketua_rt')
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
             Keuangan

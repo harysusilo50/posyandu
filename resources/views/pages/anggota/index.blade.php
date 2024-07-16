@@ -88,12 +88,12 @@
                                     @switch($item->status)
                                         @case('aktif')
                                             <span class="badge badge-pill badge-primary">Aktif
-                                                <i class="fa fa-mars"></i></span>
+                                            </span>
                                         @break
 
                                         @case('non_aktif')
                                             <span class="badge badge-pill badge-danger">Non Aktif
-                                                <i class="fa fa-venus" aria-hidden="true"></i></span>
+                                            </span>
                                         @break
 
                                         @default

@@ -34,7 +34,7 @@ class UserController extends Controller
             return view('pages.user.index', compact('data', 'search'));
         }
 
-        $data = User::when($auth == 'user', function ($query) {
+        $data = User::when($auth == 'user' || $auth == 'ketua_rt', function ($query) {
             $query->where('id', Auth::id());
         })->oldest()->paginate(15)->withQueryString();
 
